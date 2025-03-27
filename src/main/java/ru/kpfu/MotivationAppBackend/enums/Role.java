@@ -1,4 +1,4 @@
-package ru.kpfu.MotivationAppBackend;
+package ru.kpfu.MotivationAppBackend.enums;
 
 public enum Role {
     STUDENT,
