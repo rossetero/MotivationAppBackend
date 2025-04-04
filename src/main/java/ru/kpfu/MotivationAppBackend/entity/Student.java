@@ -1,19 +1,19 @@
 package ru.kpfu.MotivationAppBackend.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.ToString;
 import org.springframework.jdbc.core.SqlReturnType;
 
 import java.util.List;
 @Entity
 @Table(name = "students")
-
+@ToString(exclude = "studentsTasks")
 public class Student extends User{
-    @Column(name = "cf_handle")
-    private String cfHandle;
-    @Column(name = "acmp_id")
+    private String cfHandler;
     private String acmpId;
-   // private List<Group> participatedGroups;
-  //  private List<Task> studentsTasks;
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private List<StudentTask> studentsTasks;
+
+    // private List<Group> participatedGroups;
 }
