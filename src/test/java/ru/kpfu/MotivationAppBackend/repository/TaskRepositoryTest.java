@@ -17,15 +17,15 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.properties")
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@TestPropertySource(locations = "classpath:application-test.properties")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
 
     @Test
-  //  @Rollback(false)
+    @Rollback(false)
     public void shouldSaveTask(){
         Task task = new Task();
         task.setPlatform(Platform.CODEFORCES);

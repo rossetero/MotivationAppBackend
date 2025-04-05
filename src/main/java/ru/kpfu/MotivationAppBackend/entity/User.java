@@ -12,7 +12,7 @@ import java.util.UUID;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(unique = true,nullable = false)
     private String login;
     @Column(nullable = false)

@@ -1,6 +1,8 @@
 package ru.kpfu.MotivationAppBackend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.jdbc.core.SqlReturnType;
 
@@ -8,6 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "students")
 @ToString(exclude = "studentsTasks")
+@Getter
+@Setter
 public class Student extends User{
     private String cfHandler;
     private String acmpId;

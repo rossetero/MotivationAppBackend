@@ -25,4 +25,6 @@ public class AuthController {
         registrationService.registerStudent(request);
         return ResponseEntity.ok("Пользователь зарегистрирован");
     }
+
+
 }
