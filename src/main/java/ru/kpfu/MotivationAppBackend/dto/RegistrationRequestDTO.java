@@ -18,7 +18,6 @@ public class RegistrationRequestDTO {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    //@Pattern(regexp = "STUDENT|TEACHER", message = "must be either STUDENT or TEACHER")
     private Role role;
 
     @NotBlank
