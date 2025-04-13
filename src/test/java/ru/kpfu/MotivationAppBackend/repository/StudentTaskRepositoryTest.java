@@ -14,7 +14,7 @@ public class StudentTaskRepositoryTest {
 
     @Test
     public void shouldReturnStudentTaskInfoDTObyStudentId(){
-        System.out.println(studentTaskRepository.findAllStudentTaskInfoByStudentId(1L));
+        System.out.println(studentTaskRepository.findAllStudentTaskInfoByStudentId(3L));
     }
 
 }

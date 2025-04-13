@@ -78,9 +78,9 @@ INSERT INTO teachers (id) VALUES
 (2);
 
 INSERT INTO tasks (platform, title, link) VALUES
-('CODEFORCES', 'Two Sum Problem', 'https://codeforces.com/problemset/problem/1/A'),
-('ACMP', 'Binary Search Implementation', 'https://acmp.ru/?main=task&id=2'),
-('LEETCODE', 'Longest Substring Without Repeating Characters', 'https://leetcode.com/problems/longest-substring-without-repeating-characters/');
+('CODEFORCES', 'Two Sum Problem', 'codeforces.com/problemset/problem/1/A'),
+('ACMP', 'Binary Search Implementation', 'acmp.ru/?main=task&id=2'),
+('LEETCODE', 'Longest Substring Without Repeating Characters', 'leetcode.com/problems/longest-substring-without-repeating-characters/');
 
 INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (3, 1, 'SUCCESS'),
@@ -112,6 +112,7 @@ SELECT * FROM tasks;
 SELECT * FROM groups;
 SELECT * FROM student_task;
 SELECT * FROM student_group;
+
 
 
 

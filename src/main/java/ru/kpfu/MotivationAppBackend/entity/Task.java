@@ -1,9 +1,9 @@
 package ru.kpfu.MotivationAppBackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
 
 import java.util.List;
@@ -17,11 +17,12 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Platform platform;
-    @Column(nullable = false)
+    @NotNull
     private String title;
-    @Column(nullable = false)
+    @NotNull
     private String link;
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)

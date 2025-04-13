@@ -1,6 +1,7 @@
 package ru.kpfu.MotivationAppBackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,11 +18,12 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true)
+    @NotNull
     private String login;
-    @Column(nullable = false)
+    @NotNull
     private String password;
-    @Column(nullable = false)
+    @NotNull
     private String name;
     @Enumerated(EnumType.STRING)
     private Role role;

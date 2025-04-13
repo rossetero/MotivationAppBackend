@@ -25,7 +25,7 @@ public class TaskRepositoryTest {
 
 
     @Test
-    @Rollback(false)
+    //@Rollback(false)
     public void shouldSaveTask(){
         Task task = new Task();
         task.setPlatform(Platform.CODEFORCES);
