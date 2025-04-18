@@ -2,7 +2,22 @@
 
 /auth
     /register POST
+    request JSON
+    {
+        "login": "biba",
+        "name": "Biba Biba",
+        "role": "STUDENT", //Возможные значения TEACHER или STUDENT
+        "password": "12345678", //минимум 6 символов
+        "repeatPassword":"12345678"
+    }
     /login  POST
+
+    response JSON
+    //айди и роль нужны чтобы на фротне создавались ссылки для составления правильного эндпоинта
+    {
+        "userId": 6,
+        "role": "STUDENT"
+    }
 
 
 /user/{user_id} - секция работы с пользователями
@@ -11,12 +26,37 @@
         /profile - посмотреть свой профиль
             /edit PUT - изменить профиль
 
+
         /tasks - посмотреть все задачи
             /leetcode - посмотреть все задачи с leetcode
             /acmp - посмотреть все задачи с leetcode
             /codeforces - посмотреть все задачи с leetcode
-            /addTask POST - добавить задачу
-            /editTask PUT
+            //response JSON
+            [
+                {
+                    "platform": "CODEFORCES",
+                    "title": "Two Sum Problem",
+                    "link": "codeforces.com/problemset/problem/1/A",
+                    "verdict": "SUCCESS"
+                },
+                {
+                    "platform": "LEETCODE",
+                    "title": "Longest Substring Without Repeating Characters",
+                    "link": "leetcode.com/problems/longest-substring-without-repeating-characters/",
+                    "verdict": "SUCCESS"
+                }
+            ]
+
+            /addTask PUT - если этой задачи нет в бд, добавит ее с базу и установит связь с пользователем.
+            Если задача есть, то просто установит связь. Если связь есть, но изменился вердикт, изменится только вердикт. Если отправлено без изменений, ничего не произойдет
+            request JSON
+            {
+                "platform": "CODEFORCES",
+                "title": "Very Hard Problem",
+                "link": "http://codeforces.ru/777/A",
+                "verdict": "SUCCESS"
+            }
+            // Пример эндпоинта http://localhost:8080/api/v1/users/5/student/tasks/addTask
             /deleteTask DELETE - удалить задачу
 
 

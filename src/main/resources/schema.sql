@@ -1,10 +1,10 @@
-drop table student_task;
-drop table student_group;
-drop table students;
-drop table tasks;
-drop table groups;
-drop table teachers;
-drop table users;
+--drop table student_task;
+--drop table student_group;
+--drop table students;
+--drop table tasks;
+--drop table groups;
+--drop table teachers;
+--drop table users;
 
 create table  IF NOT EXISTS users(
 	id bigserial PRIMARY KEY not null,

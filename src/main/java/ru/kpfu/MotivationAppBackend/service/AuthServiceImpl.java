@@ -40,11 +40,11 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public void register(RegistrationRequestDTO request) {
         if (userRepository.existsByLogin(request.getLogin())) {
-            throw new IllegalArgumentException("Пользователь с таким логином уже существует");
+            throw new IllegalArgumentException("This login already exists");
         }
 
         if (!request.getPassword().equals(request.getRepeatPassword())) {
-            throw new IllegalArgumentException("Пароли не совпадают");
+            throw new IllegalArgumentException("Wrong password");
         }
 
         User user = UserFactory.createUser(request.getRole());

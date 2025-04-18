@@ -36,9 +36,9 @@ public class StudentRepositoryTest {
         student.setAcmpId("535425");
         studentRepository.save(student);
         System.out.println(studentRepository.findAll());
-        fail();
-//        student = studentRepository.findById(3L).get();
-//        System.out.println(student.getAcmpId());
+        //fail();
+        student = studentRepository.findById(3L).get();
+        System.out.println(student.getAcmpId());
 
     }
 }

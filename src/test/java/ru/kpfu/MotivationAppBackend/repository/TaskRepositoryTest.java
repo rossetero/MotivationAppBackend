@@ -52,6 +52,6 @@ public class TaskRepositoryTest {
         // Проверяем корректность данных
         assertThat(foundTask.get().getTitle()).isEqualTo("Two Sum Problem");
         assertThat(foundTask.get().getPlatform()).isEqualTo(Platform.CODEFORCES);
-        assertThat(foundTask.get().getLink()).isEqualTo("https://codeforces.com/problemset/problem/1/A");
+        assertThat(foundTask.get().getLink()).isEqualTo("codeforces.com/problemset/problem/1/A");
     }
 }

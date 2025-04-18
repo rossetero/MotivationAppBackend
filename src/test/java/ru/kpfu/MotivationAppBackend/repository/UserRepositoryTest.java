@@ -15,8 +15,8 @@ public class UserRepositoryTest {
 
     @Test
     public void shouldReturnUser(){
-//        User user = userRepository.findById(6L).get();
-//        System.out.println(user);
+        User user = userRepository.findById(3L).get();
+        System.out.println(user);
 
         //
     }
