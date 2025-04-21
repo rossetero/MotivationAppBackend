@@ -12,8 +12,12 @@ import java.util.List;
 
 public interface StudentController {
     List<StudentTaskInfoDTO> getStudentTaskList(@PathVariable Long userId);
-    List<StudentTaskInfoDTO> getStudentTaskListByPlatform(@PathVariable Long userId,String platform);
-    ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO,@PathVariable Long userId);
+
+    List<StudentTaskInfoDTO> getStudentTaskListByPlatform(@PathVariable Long userId, String platform);
+
+    ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId);
+
     StudentProfileDTO getStudentProfile(@PathVariable Long userId);
-    ResponseEntity<String> editStudentProfile(@RequestBody @Valid StudentProfileDTO studentProfileDTO,@PathVariable Long userId);
+
+    ResponseEntity<String> editStudentProfile(@RequestBody @Valid StudentProfileDTO studentProfileDTO, @PathVariable Long userId);
 }

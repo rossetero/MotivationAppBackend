@@ -16,8 +16,9 @@ import ru.kpfu.MotivationAppBackend.service.AuthService;
 @RequestMapping("/api/v1/auth")
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
+
     @Autowired
-    public AuthControllerImpl(AuthService authService){
+    public AuthControllerImpl(AuthService authService) {
         this.authService = authService;
     }
 
@@ -30,7 +31,7 @@ public class AuthControllerImpl implements AuthController {
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO request){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {
         LoginResponseDTO loginResponseDTO = authService.login(request);
         return ResponseEntity.ok(loginResponseDTO);
     }

@@ -1,10 +1,10 @@
---drop table student_task;
---drop table student_group;
---drop table students;
---drop table tasks;
---drop table groups;
---drop table teachers;
---drop table users;
+drop table student_task;
+drop table student_group;
+drop table students;
+drop table tasks;
+drop table groups;
+drop table teachers;
+drop table users;
 
 create table  IF NOT EXISTS users(
 	id bigserial PRIMARY KEY not null,
@@ -46,8 +46,9 @@ create table  IF NOT EXISTS teachers(
 
 create table IF NOT EXISTS groups(
 	id bigserial primary key not null,
+    name VARCHAR(255) NOT NULL,
+    group_goal integer,
 	owner_id bigint not null,
-	group_goal integer,
 	foreign key(owner_id) references teachers(id)
 );
 
@@ -90,9 +91,11 @@ INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (5, 2, 'FAIL'),
 (5, 3, 'SUCCESS');
 
-INSERT INTO groups (owner_id,group_goal) VALUES
-(1, 110),
-(2, 150);
+INSERT INTO groups (owner_id,name,group_goal) VALUES
+(1,'Basic Course 2024', 110),
+(1,'Basic Course 2025', 100),
+(2,'Advanced Course 2025', 150),
+(2,'СМЕШАРИКИ', 300);
 
 
 INSERT INTO student_group (student_id, group_id, student_goal) VALUES

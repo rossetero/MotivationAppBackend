@@ -10,7 +10,7 @@ import ru.kpfu.MotivationAppBackend.entity.Teacher;
 import java.util.Optional;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Student, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     boolean existsByLogin(String login);
     Optional<Teacher> findByLogin(@NotBlank @Size(min = 3, max = 50) String login);
 }

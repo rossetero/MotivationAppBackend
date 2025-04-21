@@ -3,7 +3,7 @@ package ru.kpfu.MotivationAppBackend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-//id login name
+
 @Getter
 @Setter
 @AllArgsConstructor
