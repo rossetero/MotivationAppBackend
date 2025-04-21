@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
+import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.service.StudentService;
@@ -37,6 +38,19 @@ public class StudentControllerImpl implements StudentController {
     public ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO,@PathVariable Long userId) {
         studentService.addTask(addTaskDTO,userId);
         return ResponseEntity.ok("Task Added");
+    }
+
+    @GetMapping("/profile")
+    @Override
+    public StudentProfileDTO getStudentProfile(Long userId) {
+        return studentService.getStudentProfile(userId);
+    }
+
+    @PutMapping("/profile/edit")
+    @Override
+    public ResponseEntity<String> editStudentProfile(StudentProfileDTO studentProfileDTO, Long userId) {
+        studentService.editStudentProfile(studentProfileDTO,userId);
+        return ResponseEntity.ok("Profile Updated");
     }
 
 

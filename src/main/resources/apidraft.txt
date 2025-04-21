@@ -24,7 +24,23 @@
 
     /student - секция работы со студентами
         /profile - посмотреть свой профиль
+            //response JSON
+            {
+                "id": 6,
+                "login": "biba",
+                "name": "Biba HaBiba",
+                "cfHandler": "cfBiba",
+                "acmpId": "228"
+            }
             /edit PUT - изменить профиль
+            //request JSON
+            {
+                "id": 6,
+                "login": "biba",
+                "name": "Biba HaBiba", //это поле меняется
+                "cfHandler": "cfBiba",  //и это поле меняется
+                "acmpId": "228"  //и это тоже
+            }
 
 
         /tasks - посмотреть все задачи

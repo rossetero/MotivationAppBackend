@@ -3,7 +3,9 @@ package ru.kpfu.MotivationAppBackend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
+import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
+import ru.kpfu.MotivationAppBackend.entity.Student;
 import ru.kpfu.MotivationAppBackend.entity.StudentTask;
 import ru.kpfu.MotivationAppBackend.entity.Task;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
@@ -35,19 +37,6 @@ public class StudentServiceImpl implements StudentService{
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId,platform);
     }
 
-//    @Override
-//    public void addTask(AddTaskDTO addTaskDTO, Long studentId) {
-//        addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
-//        taskService.addTaskIfNotExists(addTaskDTO);
-//        Task task = taskService.findByTitleAndLink(addTaskDTO.getTitle(), addTaskDTO.getLink()).orElseThrow(RuntimeException::new);
-//        System.out.println(task);
-//        StudentTask studentTask = new StudentTask();
-//        studentTask.setStudent(studentRepository.findById(studentId).orElseThrow(RuntimeException::new));
-//        studentTask.setTask(task);
-//        studentTask.setVerdict(addTaskDTO.getVerdict());
-//        studentTaskRepository.save(studentTask);
-//    }
-
     @Override
     public void addTask(AddTaskDTO addTaskDTO, Long studentId) {
         addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
@@ -71,6 +60,21 @@ public class StudentServiceImpl implements StudentService{
         } else {
             System.out.println("No new content");
         }
+    }
+
+    @Override
+    public StudentProfileDTO getStudentProfile(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+        return new StudentProfileDTO(student.getId(),student.getLogin(),student.getName(),student.getCfHandler(),student.getAcmpId());
+    }
+
+    @Override
+    public void editStudentProfile(StudentProfileDTO studentProfileDTO, Long studentId) {
+        Student s = studentRepository.findById(studentId).orElseThrow();
+        s.setName(studentProfileDTO.getName());
+        s.setCfHandler(studentProfileDTO.getCfHandler());
+        s.setAcmpId(studentProfileDTO.getAcmpId());
+        studentRepository.save(s);
     }
 
     private String removePrefix(String url){
