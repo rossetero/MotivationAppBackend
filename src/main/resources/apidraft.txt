@@ -99,11 +99,55 @@
             }
 
         /groups - посмотреть группы которыми владеет преподаватель
+        response JSON
+        [
+            {
+                "id": 4,
+                "name": "СМЕШАРИКИ",
+                "groupGoal": 300,
+                "ownerName": "Prof. Jane Roe Biba",
+                "ownerId": 2
+            },
+            {
+                "id": 3,
+                "name": "Advanced Course 2025 Semestr 1",
+                "groupGoal": 204,
+                "ownerName": "Prof. Jane Roe Biba",
+                "ownerId": 2
+            }
+        ]
             /create POST - создать группу
-            /{group_id} - получить информацию о группе с данным group_id
+            http://localhost:8080/api/v1/users/2/teacher/groups/create?name=TestCreateGroup&groupGoal=123
+            response JSON
+            {
+                "id": 5,
+                "name": "TestCreateGroup",
+                "groupGoal": 123,
+                "ownerName": "Prof. Jane Roe Biba",
+                "ownerId": 2
+            }
+
+            /{group_id} - получить информацию о группе с данным group_id если она принаждежит пользователю
+            http://localhost:8080/api/v1/users/2/teacher/groups/3
+            response JSON
+                        {
+                            "id": 3,
+                            "name": "Advanced Course 2025 Semestr 1",
+                            "groupGoal": 204,
+                            "ownerName": "Prof. Jane Roe Biba",
+                            "ownerId": 2
+                        }
                 /edit PUT - редактировать группу
-                /addStudent(с параметром либо по id либо по логину) POST - добавить студента в группу
-                /setStudentGoal(с целочисленным параметром) PUT - задать цель для студента в группе
+                request JSON
+                {
+                    "id": 3,
+                    "name": "Advanced Course 2025 Semestr 1",// можно менять
+                    "groupGoal": 204, // можно менять
+                    "ownerName": "Prof. Jane Roe Biba",
+                    "ownerId": 2
+                }
+                /addStudentInGroup(с параметром либо по id либо по логину) POST - добавить студента в группу
+                /setStudentGoal(id студента ,цель) PUT - задать цель для студента в группе
 
 /groups - секция работы с группами
     /{group_id} - посмотреть информацию о группе с данным id

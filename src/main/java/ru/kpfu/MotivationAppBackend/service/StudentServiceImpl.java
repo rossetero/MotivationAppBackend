@@ -46,7 +46,6 @@ public class StudentServiceImpl implements StudentService{
         if (relation.isEmpty()) {
             taskService.addTaskIfNotExists(addTaskDTO);
             Task task = taskService.findByTitleAndLink(addTaskDTO.getTitle(), addTaskDTO.getLink()).orElseThrow(RuntimeException::new);
-            System.out.println(task);
             StudentTask studentTask = new StudentTask();
             studentTask.setStudent(studentRepository.findById(studentId).orElseThrow(RuntimeException::new));
             studentTask.setTask(task);
