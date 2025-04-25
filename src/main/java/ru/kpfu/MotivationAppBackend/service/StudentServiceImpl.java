@@ -17,9 +17,9 @@ import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
-    StudentRepository studentRepository;
-    StudentTaskRepository studentTaskRepository;
-    TaskService taskService;
+    private final StudentRepository studentRepository;
+    private final StudentTaskRepository studentTaskRepository;
+    private final TaskService taskService;
     @Autowired
     public StudentServiceImpl(StudentRepository studentRepository,StudentTaskRepository studentTaskRepository,TaskService taskService){
         this.studentRepository=studentRepository;

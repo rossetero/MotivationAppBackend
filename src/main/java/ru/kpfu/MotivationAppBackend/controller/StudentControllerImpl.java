@@ -43,13 +43,13 @@ public class StudentControllerImpl implements StudentController {
 
     @GetMapping("/profile")
     @Override
-    public StudentProfileDTO getStudentProfile(Long userId) {
+    public StudentProfileDTO getStudentProfile(@PathVariable Long userId) {
         return studentService.getStudentProfile(userId);
     }
 
     @PutMapping("/profile/edit")
     @Override
-    public ResponseEntity<String> editStudentProfile(StudentProfileDTO studentProfileDTO, Long userId) {
+    public ResponseEntity<String> editStudentProfile(@RequestBody @Valid StudentProfileDTO studentProfileDTO, @PathVariable Long userId) {
         studentService.editStudentProfile(studentProfileDTO, userId);
         return ResponseEntity.ok("Profile Updated");
     }

@@ -11,7 +11,11 @@
         "repeatPassword":"12345678"
     }
     /login  POST
-
+    request JSON
+    {
+        "login" : "biba",
+        "password" : "12345678"
+    }
     response JSON
     //айди и роль нужны чтобы на фротне создавались ссылки для составления правильного эндпоинта
     {
@@ -80,7 +84,19 @@
 
     /teacher - секция работы с преподавателями
         /profile - посмотреть свой профиль
+        response JSON
+        {
+            "id": 2,
+            "login": "teacher2",
+            "name": "Prof. Jane Roe Biba"
+        }
             /edit PUT - изменить профиль
+            request JSON
+            {
+                "id": 2,
+                "login": "teacher2",
+                "name": "Prof. Jane Roe Biba" //только это поле меняется
+            }
 
         /groups - посмотреть группы которыми владеет преподаватель
             /create POST - создать группу

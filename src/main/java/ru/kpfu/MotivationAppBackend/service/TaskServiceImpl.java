@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService{
-    TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository){
         this.taskRepository=taskRepository;
