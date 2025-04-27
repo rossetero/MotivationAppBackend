@@ -52,6 +52,13 @@ public class TeacherControllerImpl implements TeacherController {
         return ResponseEntity.ok("Group updated");
     }
 
+    @PutMapping("/groups/{groupId}/addStudent")
+    @Override
+    public ResponseEntity<String> addStudentInGroup(@PathVariable Long userId,@PathVariable Long groupId,@RequestParam(value = "studentLogin") String studentLogin,@RequestParam(value = "studentGoal") int studentGoal) {
+        teacherService.addStudentInGroup(userId,groupId,studentLogin,studentGoal);
+        return ResponseEntity.ok("Student added");
+    }
+
     @PostMapping("/groups/create")
     @Override
     public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal) {

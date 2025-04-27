@@ -3,6 +3,7 @@ package ru.kpfu.MotivationAppBackend.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
 import ru.kpfu.MotivationAppBackend.entity.StudentTask;
@@ -11,6 +12,7 @@ import ru.kpfu.MotivationAppBackend.enums.Platform;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
     @Query("""
     SELECT new ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO(

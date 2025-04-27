@@ -146,11 +146,12 @@
                     "ownerName": "Prof. Jane Roe Biba",
                     "ownerId": 2
                 }
-                /addStudentInGroup(с параметром либо по id либо по логину) POST - добавить студента в группу
-                /setStudentGoal(id студента ,цель) PUT - задать цель для студента в группе
+                /addStudentInGroup
+               http://localhost:8080/api/v1/users/1/teacher/groups/3/addStudent?studentLogin=teststudent&studentGoal=44
+               Все параметры обязательные. Если меняется только studentGoal, будет обновлена существующая запись
 
-/groups - секция работы с группами
-    /{group_id} - посмотреть информацию о группе с данным id
+/groups - секция работы с группами (получить все группы но без участников)
+    /{group_id} - посмотреть информацию о группе с данным id с участниками
 
 
 

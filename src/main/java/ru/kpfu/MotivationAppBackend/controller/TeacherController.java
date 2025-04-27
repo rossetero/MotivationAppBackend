@@ -27,6 +27,9 @@ public interface TeacherController {
     @PutMapping("/groups/{groupId}/edit")
     ResponseEntity<String> editTeachersGroupInfo(GroupDTO groupDTO,Long userId, Long groupId);
 
+    @PutMapping("/groups/{groupId}/addStudent")
+    ResponseEntity<String> addStudentInGroup(Long userId, Long groupId, String studentLogin,int studentGoal);
+
     @PostMapping("/groups/create")
     GroupDTO createGroup(Long userId, String name,int groupGoal);
 }

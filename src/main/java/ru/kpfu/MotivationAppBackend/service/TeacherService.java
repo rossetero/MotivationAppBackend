@@ -17,4 +17,6 @@ public interface TeacherService {
     void editTeachersGroup(GroupDTO groupDTO,Long teacherId,Long groupId);
 
     GroupDTO createGroup(Long teacherId ,String name, int groupGoal);
+
+    void addStudentInGroup(Long teacherId,Long groupId,String login, int studentGroup);
 }

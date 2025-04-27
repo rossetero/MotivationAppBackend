@@ -52,7 +52,6 @@ public class StudentServiceImpl implements StudentService{
             studentTask.setVerdict(addTaskDTO.getVerdict());
             studentTaskRepository.save(studentTask);
         } else if(relation.get().getVerdict()!=addTaskDTO.getVerdict()) {
-            //StudentTask studentTask = studentTaskRepository.findByStudentId(studentId).orElseThrow(RuntimeException::new);
             StudentTask studentTask = studentTaskRepository.findById(relation.get().getId()).orElseThrow(RuntimeException::new);
             studentTask.setVerdict(addTaskDTO.getVerdict());
             studentTaskRepository.save(studentTask);
