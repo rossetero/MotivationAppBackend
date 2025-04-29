@@ -3,16 +3,14 @@ package ru.kpfu.MotivationAppBackend.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.LoginRequestDTO;
 import ru.kpfu.MotivationAppBackend.dto.LoginResponseDTO;
 import ru.kpfu.MotivationAppBackend.dto.RegistrationRequestDTO;
 import ru.kpfu.MotivationAppBackend.service.AuthService;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RequestMapping("/api/v1/auth")
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;

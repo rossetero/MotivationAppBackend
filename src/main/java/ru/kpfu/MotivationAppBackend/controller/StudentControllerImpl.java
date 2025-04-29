@@ -14,6 +14,7 @@ import ru.kpfu.MotivationAppBackend.service.StudentService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RequestMapping("/api/v1/users/{userId}/student")
 public class StudentControllerImpl implements StudentController {
     StudentService studentService;

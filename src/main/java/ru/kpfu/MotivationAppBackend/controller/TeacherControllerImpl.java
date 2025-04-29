@@ -11,6 +11,7 @@ import ru.kpfu.MotivationAppBackend.service.TeacherService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RequestMapping("/api/v1/users/{userId}/teacher")
 public class TeacherControllerImpl implements TeacherController {
     private final TeacherService teacherService;

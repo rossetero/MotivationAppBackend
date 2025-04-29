@@ -1,10 +1,7 @@
 package ru.kpfu.MotivationAppBackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTOWithMembers;
 import ru.kpfu.MotivationAppBackend.repository.GroupRepository;
@@ -13,6 +10,7 @@ import ru.kpfu.MotivationAppBackend.service.GroupService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RequestMapping("/api/v1")
 public class GroupControllerImpl implements GroupController {
     private final GroupRepository groupRepository;
