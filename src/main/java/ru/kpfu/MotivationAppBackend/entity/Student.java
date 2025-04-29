@@ -17,7 +17,7 @@ public class Student extends User {
     @JoinColumn(name = "student_id")
     private List<StudentTask> studentTaskList;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     private List<StudentGroup> participatedGroups;
 }

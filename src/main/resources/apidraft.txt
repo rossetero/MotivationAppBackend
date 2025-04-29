@@ -81,6 +81,21 @@
 
 
         /groups - посмотреть группы в которых состоит студент
+        response JSON
+        [
+            {
+                "id": 1,
+                "name": "Basic Course 2024",
+                "groupGoal": 110,
+                "studentGoal": 10
+            },
+            {
+                "id": 2,
+                "name": "Basic Course 2025",
+                "groupGoal": 100,
+                "studentGoal": 30
+            }
+        ]
 
     /teacher - секция работы с преподавателями
         /profile - посмотреть свой профиль
@@ -151,7 +166,69 @@
                Все параметры обязательные. Если меняется только studentGoal, будет обновлена существующая запись
 
 /groups - секция работы с группами (получить все группы но без участников)
+response
+[
+    {
+        "id": 1,
+        "name": "Basic Course 2024",
+        "groupGoal": 110,
+        "ownerName": "Dr. John Doe",
+        "ownerId": 1
+    },
+    {
+        "id": 2,
+        "name": "Basic Course 2025",
+        "groupGoal": 100,
+        "ownerName": "Dr. John Doe",
+        "ownerId": 1
+    },
+    {
+        "id": 3,
+        "name": "Advanced Course 2025",
+        "groupGoal": 150,
+        "ownerName": "Prof. Jane Roe",
+        "ownerId": 2
+    },
+    {
+        "id": 4,
+        "name": "СМЕШАРИКИ",
+        "groupGoal": 300,
+        "ownerName": "Prof. Jane Roe",
+        "ownerId": 2
+    }
+]
     /{group_id} - посмотреть информацию о группе с данным id с участниками
+    response
+    {
+        "id": 1,
+        "name": "Basic Course 2024",
+        "groupGoal": 110,
+        "ownerName": "Dr. John Doe",
+        "ownerId": 1,
+        "members": [
+            {
+                "id": 3,
+                "login": "student1",
+                "name": "Alice Johnson",
+                "cfHandler": "alice_cf",
+                "acmpId": "1001"
+            },
+            {
+                "id": 4,
+                "login": "student2",
+                "name": "Bob Smith",
+                "cfHandler": "bob_cf",
+                "acmpId": "1002"
+            },
+            {
+                "id": 5,
+                "login": "student3",
+                "name": "Charlie Brown",
+                "cfHandler": "charlie_cf",
+                "acmpId": "1003"
+            }
+        ]
+    }
 
 
 

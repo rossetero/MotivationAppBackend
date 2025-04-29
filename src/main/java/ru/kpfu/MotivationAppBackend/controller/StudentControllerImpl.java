@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
+import ru.kpfu.MotivationAppBackend.dto.StudentGoalsDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
@@ -45,6 +46,11 @@ public class StudentControllerImpl implements StudentController {
     @Override
     public StudentProfileDTO getStudentProfile(@PathVariable Long userId) {
         return studentService.getStudentProfile(userId);
+    }
+    @GetMapping("/groups")
+    @Override
+    public List<StudentGoalsDTO> getParticipatedGroups(Long userId) {
+        return studentService.getParticipatedGroups(userId);
     }
 
     @PutMapping("/profile/edit")

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
+import ru.kpfu.MotivationAppBackend.dto.StudentGoalsDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
 
@@ -24,6 +25,9 @@ public interface StudentController {
 
     @GetMapping("/profile")
     StudentProfileDTO getStudentProfile(@PathVariable Long userId);
+
+    @GetMapping("/groups")
+    List<StudentGoalsDTO> getParticipatedGroups(@PathVariable Long userId);
 
     @PutMapping("/profile/edit")
     ResponseEntity<String> editStudentProfile(@RequestBody @Valid StudentProfileDTO studentProfileDTO, @PathVariable Long userId);

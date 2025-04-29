@@ -21,7 +21,7 @@ public class Group {
     private Teacher owner;
     private int groupGoal;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private List<StudentGroup> members;
 }
