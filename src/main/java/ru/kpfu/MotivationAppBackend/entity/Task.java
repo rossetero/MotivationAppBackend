@@ -22,6 +22,7 @@ public class Task {
     private Platform platform;
     @NotNull
     private String title;
+    private double difficulty;
     @NotNull
     private String link;
 

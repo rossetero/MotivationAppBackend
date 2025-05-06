@@ -25,6 +25,7 @@ create table IF NOT EXISTS tasks (
 	id bigserial primary key not null,
 	platform varchar(20) not null,
 	title varchar(200) not null,
+	difficulty real,
 	link varchar(100) not null
 );
 
@@ -48,6 +49,8 @@ create table IF NOT EXISTS groups(
 	id bigserial primary key not null,
     name VARCHAR(255) NOT NULL,
     group_goal integer,
+	min_avg_difficulty real CHECK (min_avg_difficulty >= 1 AND min_avg_difficulty <= 100),
+	goal_set_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	owner_id bigint not null,
 	foreign key(owner_id) references teachers(id)
 );
@@ -57,6 +60,7 @@ create table IF NOT EXISTS student_group(
 	student_id BIGINT,
 	group_id BIGINT,
 	student_goal INTEGER,
+	student_current_score INTEGER,
 	foreign key(student_id) references students (id),
 	foreign key(group_id) references groups (id)
 );
@@ -78,10 +82,10 @@ INSERT INTO teachers (id) VALUES
 (1),
 (2);
 
-INSERT INTO tasks (platform, title, link) VALUES
-('CODEFORCES', 'Two Sum Problem', 'codeforces.com/problemset/problem/1/A'),
-('ACMP', 'Binary Search Implementation', 'acmp.ru/?main=task&id=2'),
-('LEETCODE', 'Longest Substring Without Repeating Characters', 'leetcode.com/problems/longest-substring-without-repeating-characters/');
+INSERT INTO tasks (platform, title,difficulty, link) VALUES
+('CODEFORCES', 'Two Sum Problem',45, 'codeforces.com/problemset/problem/1/A'),
+('ACMP', 'Binary Search Implementation',23, 'acmp.ru/?main=task&id=2'),
+('LEETCODE', 'Longest Substring Without Repeating Characters',100, 'leetcode.com/problems/longest-substring-without-repeating-characters/');
 
 INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (3, 1, 'SUCCESS'),
@@ -91,20 +95,20 @@ INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (5, 2, 'FAIL'),
 (5, 3, 'SUCCESS');
 
-INSERT INTO groups (owner_id,name,group_goal) VALUES
-(1,'Basic Course 2024', 110),
-(1,'Basic Course 2025', 100),
-(2,'Advanced Course 2025', 150),
-(2,'СМЕШАРИКИ', 300);
+INSERT INTO groups (owner_id,name,group_goal,min_avg_difficulty) VALUES
+(1,'Basic Course 2024', 110,1),
+(1,'Basic Course 2025', 100,1),
+(2,'Advanced Course 2025', 150,50),
+(2,'СМЕШАРИКИ', 300,70);
 
 
-INSERT INTO student_group (student_id, group_id, student_goal) VALUES
-(3, 1, 10),
-(4, 1, 10),
-(5, 2, 10),
-(3, 2, 30),
-(4, 2, 30),
-(5, 1, 30);
+INSERT INTO student_group (student_id, group_id, student_goal,student_current_score) VALUES
+(3, 1, 10,6),
+(4, 1, 10,4),
+(5, 2, 10,11),
+(3, 2, 30,23),
+(4, 2, 30,66),
+(5, 1, 30,12);
 
 
 
