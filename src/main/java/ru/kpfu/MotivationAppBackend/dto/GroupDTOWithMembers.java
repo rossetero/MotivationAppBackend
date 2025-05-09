@@ -16,6 +16,7 @@ public class GroupDTOWithMembers {
         private Long id;
         private String name;
         private int groupGoal;
+        private double minAvgDifficulty;
         private String ownerName;
         private Long ownerId;
         private List<StudentProfileDTO> members;

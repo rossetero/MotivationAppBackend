@@ -62,8 +62,8 @@ public class TeacherControllerImpl implements TeacherController {
 
     @PostMapping("/groups/create")
     @Override
-    public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal) {
-        return teacherService.createGroup(userId, name, groupGoal);
+    public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal, @RequestParam(value = "minAvgDifficulty") double minAvgDifficulty) {
+        return teacherService.createGroup(userId, name, groupGoal, minAvgDifficulty);
     }
 
 

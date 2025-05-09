@@ -12,6 +12,7 @@ import ru.kpfu.MotivationAppBackend.repository.StudentGroupRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.TeacherRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +62,11 @@ public class TeacherServiceImpl implements TeacherService {
         if (teacherGroupIds.contains(groupId)) {
             Group g = groupRepository.findById(groupId).orElseThrow(RuntimeException::new);
             g.setName(groupDTO.getName());
-            g.setGroupGoal(groupDTO.getGroupGoal());
+            if(g.getGroupGoal()!=groupDTO.getGroupGoal() || g.getMinAvgDifficulty()!=groupDTO.getMinAvgDifficulty()){
+                g.setGroupGoal(groupDTO.getGroupGoal());
+                g.setMinAvgDifficulty(groupDTO.getMinAvgDifficulty());
+                g.setGoalSetTime(LocalDateTime.now());
+            }
             groupRepository.save(g);
         } else {
             throw new RuntimeException("This teacher with id = "+teacherId+" doesn't own this group");
@@ -69,18 +74,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public GroupDTO createGroup(Long teacherId, String name, int groupGoal) {
+    public GroupDTO createGroup(Long teacherId, String name, int groupGoal,double minAvgDifficulty) {
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(RuntimeException::new);
         Group group = new Group();
         group.setName(name);
         group.setGroupGoal(groupGoal);
+        group.setMinAvgDifficulty(minAvgDifficulty);
         group.setOwner(teacher);
         groupRepository.save(group);
         return groupRepository.findAllGroupDTOsForOwner(teacherId).getLast();
     }
 
-    //проверять владеет ли учитель группой
-    //проверять существование отношения чтобы реализовать обновление
     @Override
     public void addStudentInGroup(Long teacherId, Long groupId, String studentLogin,int studentGoal) {
         Student student = studentRepository.findByLogin(studentLogin).orElseThrow(()->new RuntimeException("User "+studentLogin+" doesn't exists"));

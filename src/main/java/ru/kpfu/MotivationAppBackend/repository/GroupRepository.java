@@ -14,17 +14,17 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
-    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal, t.name, t.id) " +
+    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal,g.minAvgDifficulty, t.name, t.id) " +
             "FROM Group g JOIN g.owner t WHERE g.id = :groupId and t.id = :teacherId")
     GroupDTO findGroupDTOByIdAndOwner(@Param("teacherId") Long teacherId, @Param("groupId") Long groupId);
 
 
-    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal, t.name, t.id) " +
+    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal,g.minAvgDifficulty, t.name, t.id) " +
             "FROM Group g JOIN g.owner t " +
             "WHERE t.id = :teacherId")
     List<GroupDTO> findAllGroupDTOsForOwner(@Param("teacherId") Long teacherId);
 
-    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal, t.name, t.id) " +
+    @Query("SELECT new ru.kpfu.MotivationAppBackend.dto.GroupDTO(g.id, g.name, g.groupGoal,g.minAvgDifficulty, t.name, t.id) " +
             "FROM Group g JOIN g.owner t ")
     List<GroupDTO> findAllGroupDTOs();
 

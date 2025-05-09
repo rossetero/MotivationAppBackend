@@ -34,6 +34,7 @@ create table IF NOT EXISTS student_task(
 	student_id BIGINT,
 	task_id BIGINT,
 	verdict varchar(10) check (verdict in ('SUCCESS','FAIL')),
+	last_changed_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	foreign key(student_id) references students (id),
 	foreign key(task_id) references tasks (id)
 );

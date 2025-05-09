@@ -22,6 +22,7 @@ public class TaskServiceImpl implements TaskService{
             Task newTask = new Task();
             newTask.setPlatform(addTaskDTO.getPlatform());
             newTask.setTitle(addTaskDTO.getTitle());
+            newTask.setDifficulty(addTaskDTO.getDifficulty());
             newTask.setLink(addTaskDTO.getLink());
             taskRepository.save(newTask);
             System.out.println("New Task Saved");

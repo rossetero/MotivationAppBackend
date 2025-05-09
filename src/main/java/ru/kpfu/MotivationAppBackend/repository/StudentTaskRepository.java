@@ -18,6 +18,7 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
     SELECT new ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO(
         studentTask.task.platform,
         studentTask.task.title,
+        studentTask.task.difficulty,
         studentTask.task.link,
         studentTask.verdict
     )
@@ -30,6 +31,7 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
     SELECT new ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO(
         studentTask.task.platform,
         studentTask.task.title,
+        studentTask.task.difficulty,
         studentTask.task.link,
         studentTask.verdict
     )
@@ -43,6 +45,7 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
         studentTask.id,
         studentTask.task.platform,
         studentTask.task.title,
+        studentTask.task.difficulty,
         studentTask.task.link,
         studentTask.verdict
     )

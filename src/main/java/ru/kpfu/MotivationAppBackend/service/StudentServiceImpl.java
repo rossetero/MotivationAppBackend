@@ -12,6 +12,7 @@ import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentTaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +52,12 @@ public class StudentServiceImpl implements StudentService {
             studentTask.setStudent(studentRepository.findById(studentId).orElseThrow(RuntimeException::new));
             studentTask.setTask(task);
             studentTask.setVerdict(addTaskDTO.getVerdict());
+            studentTask.setLastChangedTime(LocalDateTime.now());
             studentTaskRepository.save(studentTask);
         } else if (relation.get().getVerdict() != addTaskDTO.getVerdict()) {
             StudentTask studentTask = studentTaskRepository.findById(relation.get().getId()).orElseThrow(RuntimeException::new);
             studentTask.setVerdict(addTaskDTO.getVerdict());
+            studentTask.setLastChangedTime(LocalDateTime.now());
             studentTaskRepository.save(studentTask);
         } else {
             System.out.println("No new content");
@@ -88,7 +91,8 @@ public class StudentServiceImpl implements StudentService {
                             g.getId(),
                             g.getName(),
                             g.getGroupGoal(),
-                            studentGroup.getStudentGoal()
+                            studentGroup.getStudentGoal(),
+                            studentGroup.getStudentCurrentScore()
                     );
                 }
         ).toList();

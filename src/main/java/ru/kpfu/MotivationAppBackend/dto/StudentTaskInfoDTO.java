@@ -21,14 +21,16 @@ public class StudentTaskInfoDTO {
     private Platform platform;
     @NotBlank
     private String title;
+    private double difficulty;
     @NotBlank
     private String link;
     @NotBlank
     private Verdict verdict;
 
-    public StudentTaskInfoDTO(Platform platform, String title, String link, Verdict verdict) {
+    public StudentTaskInfoDTO(Platform platform, String title,double difficulty, String link, Verdict verdict) {
         this.platform = platform;
         this.title = title;
+        this.difficulty = difficulty;
         this.link = link;
         this.verdict = verdict;
     }

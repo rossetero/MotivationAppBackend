@@ -14,4 +14,5 @@ public class StudentGoalsDTO {
     private String name;
     private int groupGoal;
     private int studentGoal;
+    private int studentCurrentScore;
 }

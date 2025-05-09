@@ -17,6 +17,7 @@ public class AddTaskDTO {
     private Platform platform;
     @NotBlank
     private String title;
+    private double difficulty;
     @NotBlank
     private String link;
     @NotNull

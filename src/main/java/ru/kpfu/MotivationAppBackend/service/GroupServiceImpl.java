@@ -43,6 +43,7 @@ public class GroupServiceImpl implements GroupService {
                 group.getId(),
                 group.getName(),
                 group.getGroupGoal(),
+                group.getMinAvgDifficulty(),
                 group.getOwner().getName(),
                 group.getOwner().getId(),
                 members

@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.kpfu.MotivationAppBackend.enums.Verdict;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -21,4 +23,5 @@ public class StudentTask {
     private Task task;
     @Enumerated(EnumType.STRING)
     private Verdict verdict;
+    private LocalDateTime lastChangedTime;
 }
