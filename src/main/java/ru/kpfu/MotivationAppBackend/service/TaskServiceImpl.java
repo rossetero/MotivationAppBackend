@@ -19,7 +19,8 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
     }
 
-    private double normalizeDiff(double inputDiff, Platform platform) {
+    @Override
+    public double normalizeDiff(double inputDiff, Platform platform) {
         if (platform == Platform.ACMP) {
             return inputDiff;
         } else {

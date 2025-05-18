@@ -46,8 +46,9 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         StudentGroup sg = student.getParticipatedGroups().getFirst();
         Group g = sg.getGroup();
-        if (addTaskDTO.getDifficulty() >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
-            sg.setStudentCurrentScore(sg.getStudentCurrentScore() + 1);
+        double normalizedDiff = taskService.normalizeDiff(addTaskDTO.getDifficulty(),addTaskDTO.getPlatform());
+        if (normalizedDiff >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
+            sg.setStudentCurrentScore((int) (sg.getStudentCurrentScore() + 1 + Math.round(normalizedDiff*2/100)));
             studentGroupRepository.save(sg);
         }
     }
@@ -75,6 +76,7 @@ public class StudentServiceImpl implements StudentService {
         } else {
             System.out.println("No new content");
         }
+        incrementCurrentScore(addTaskDTO,studentId);
     }
 
     @Override

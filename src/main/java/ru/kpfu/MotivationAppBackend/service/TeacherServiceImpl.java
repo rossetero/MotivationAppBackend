@@ -56,8 +56,15 @@ public class TeacherServiceImpl implements TeacherService {
         return groupRepository.findGroupDTOByIdAndOwner(teacherId, groupId);
     }
 
+    private void resetStudentCurrentScores(Long groupId){
+        List<StudentGroup> members = studentGroupRepository.findAllByGroupId(groupId);
+        members.forEach(sg->sg.setStudentCurrentScore(0));
+        studentGroupRepository.saveAll(members);
+    }
+
     @Override
     public void editTeachersGroup(GroupDTO groupDTO, Long teacherId, Long groupId) {
+        boolean f = false;
         List<Long> teacherGroupIds = getTeachersGroups(teacherId).stream().map(GroupDTO::getId).toList();
         if (teacherGroupIds.contains(groupId)) {
             Group g = groupRepository.findById(groupId).orElseThrow(RuntimeException::new);
@@ -66,8 +73,10 @@ public class TeacherServiceImpl implements TeacherService {
                 g.setGroupGoal(groupDTO.getGroupGoal());
                 g.setMinAvgDifficulty(groupDTO.getMinAvgDifficulty());
                 g.setGoalSetTime(LocalDateTime.now());
+                f=true;
             }
             groupRepository.save(g);
+            if(f) resetStudentCurrentScores(groupId);
         } else {
             throw new RuntimeException("This teacher with id = "+teacherId+" doesn't own this group");
         }
@@ -81,6 +90,7 @@ public class TeacherServiceImpl implements TeacherService {
         group.setGroupGoal(groupGoal);
         group.setMinAvgDifficulty(minAvgDifficulty);
         group.setOwner(teacher);
+        group.setGoalSetTime(LocalDateTime.now());
         groupRepository.save(group);
         return groupRepository.findAllGroupDTOsForOwner(teacherId).getLast();
     }
