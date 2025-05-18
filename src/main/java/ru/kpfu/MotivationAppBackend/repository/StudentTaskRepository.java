@@ -61,7 +61,4 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
             @Param("title") String title,
             @Param("link") String link
     );
-
-    //Optional<StudentTask> findByStudentId(Long studentId);
-
 }

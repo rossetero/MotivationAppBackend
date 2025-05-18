@@ -2,13 +2,13 @@ package ru.kpfu.MotivationAppBackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import ru.kpfu.MotivationAppBackend.dto.*;
-import ru.kpfu.MotivationAppBackend.entity.Group;
-import ru.kpfu.MotivationAppBackend.entity.Student;
-import ru.kpfu.MotivationAppBackend.entity.StudentTask;
-import ru.kpfu.MotivationAppBackend.entity.Task;
+import ru.kpfu.MotivationAppBackend.entity.*;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
+import ru.kpfu.MotivationAppBackend.enums.Verdict;
+import ru.kpfu.MotivationAppBackend.repository.StudentGroupRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentTaskRepository;
 
@@ -20,12 +20,14 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentTaskRepository studentTaskRepository;
+    private final StudentGroupRepository studentGroupRepository;
     private final TaskService taskService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, TaskService taskService) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService) {
         this.studentRepository = studentRepository;
         this.studentTaskRepository = studentTaskRepository;
+        this.studentGroupRepository = studentGroupRepository;
         this.taskService = taskService;
     }
 
@@ -37,6 +39,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentTaskInfoDTO> getStudentTaskListByPlatform(Long studentId, Platform platform) {
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId, platform);
+    }
+
+    private void incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        StudentGroup sg = student.getParticipatedGroups().getFirst();
+        Group g = sg.getGroup();
+        if (addTaskDTO.getDifficulty() >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
+            sg.setStudentCurrentScore(sg.getStudentCurrentScore() + 1);
+            studentGroupRepository.save(sg);
+        }
     }
 
     @Override
@@ -82,7 +95,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentGoalsDTO> getParticipatedGroups(Long studentId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new EntityNotFoundException("Group not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         return student.getParticipatedGroups().stream().map(
                 studentGroup -> {
                     Group g = studentGroup.getGroup();

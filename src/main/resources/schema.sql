@@ -58,7 +58,7 @@ create table IF NOT EXISTS groups(
 
 create table IF NOT EXISTS student_group(
 	id bigserial primary key not null,
-	student_id BIGINT,
+	student_id BIGINT UNIQUE,
 	group_id BIGINT,
 	student_goal INTEGER,
 	student_current_score INTEGER,
@@ -69,15 +69,21 @@ create table IF NOT EXISTS student_group(
 INSERT INTO users (login, password, name, role) VALUES
 ('teacher1', 'hashed_password4', 'Dr. John Doe', 'TEACHER'),
 ('teacher2', 'hashed_password5', 'Prof. Jane Roe', 'TEACHER'),
-('student1', 'hashed_password1', 'Alice Johnson', 'STUDENT'),
-('student2', 'hashed_password2', 'Bob Smith', 'STUDENT'),
-('student3', 'hashed_password3', 'Charlie Brown', 'STUDENT');
+('student1', 'hashed_password1', 'Alice Aohnson', 'STUDENT'),
+('student2', 'hashed_password2', 'Bob Bmith', 'STUDENT'),
+('student3', 'hashed_password3', 'Charlie Crown', 'STUDENT'),
+('student4', 'hashed_password1', 'Dick Dickson', 'STUDENT'),
+('student5', 'hashed_password2', 'Eva Evan', 'STUDENT'),
+('student6', 'hashed_password3', 'Frank Ford', 'STUDENT');
 
 
 INSERT INTO students (id,cf_handler,acmp_id) VALUES
 (3, 'alice_cf', '1001'),
 (4, 'bob_cf', '1002'),
-(5, 'charlie_cf', '1003');
+(5, 'charlie_cf', '1003'),
+(6, 'dick_cf', '1004'),
+(7, 'eva_cf', '1005'),
+(8, 'frank_cf', '1006');
 
 INSERT INTO teachers (id) VALUES
 (1),
@@ -106,12 +112,10 @@ INSERT INTO groups (owner_id,name,group_goal,min_avg_difficulty) VALUES
 INSERT INTO student_group (student_id, group_id, student_goal,student_current_score) VALUES
 (3, 1, 10,6),
 (4, 1, 10,4),
-(5, 2, 10,11),
-(3, 2, 30,23),
-(4, 2, 30,66),
-(5, 1, 30,12);
-
-
+(5, 1, 10,11),
+(6, 2, 30,23),
+(7, 2, 30,66),
+(8, 2, 30,12);
 
 SELECT * FROM students;
 SELECT * FROM users;
