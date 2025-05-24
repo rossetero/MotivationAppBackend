@@ -25,7 +25,7 @@ create table IF NOT EXISTS tasks (
 	id bigserial primary key not null,
 	platform varchar(20) not null,
 	title varchar(200) not null,
-	difficulty real,
+	difficulty real CHECK (difficulty >= 1 AND difficulty <= 100),,
 	link varchar(100) not null
 );
 
