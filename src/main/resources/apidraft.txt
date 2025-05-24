@@ -70,9 +70,12 @@
             /addTask PUT - если этой задачи нет в бд, добавит ее с базу и установит связь с пользователем.
             Если задача есть, то просто установит связь. Если связь есть, но изменился вердикт, изменится только вердикт. Если отправлено без изменений, ничего не произойдет
             request JSON
+            !!! Для каждой платформы свой диапазон значений. Для LeetCode следай пожалуйста
+            на фронте какой-нибудь конвертер, который бы переводил EASY, MEDIUM, HARD в 1,2,3 cоответственно
             {
                 "platform": "CODEFORCES",
                 "title": "Very Hard Problem",
+                "difficulty": 1000,
                 "link": "http://codeforces.ru/777/A",
                 "verdict": "SUCCESS"
             }
@@ -132,12 +135,14 @@
             }
         ]
             /create POST - создать группу
-            http://localhost:8080/api/v1/users/2/teacher/groups/create?name=TestCreateGroup&groupGoal=123
+
+            http://localhost:8080/api/v1/users/1/teacher/groups/create?name=TESTGROUP&groupGoal=300&minAvgDifficulty=30
             response JSON
             {
                 "id": 5,
                 "name": "TestCreateGroup",
-                "groupGoal": 123,
+                "groupGoal": 300,
+                "minAvgDifficulty": 30.0,
                 "ownerName": "Prof. Jane Roe Biba",
                 "ownerId": 2
             }
@@ -158,6 +163,7 @@
                     "id": 3,
                     "name": "Advanced Course 2025 Semestr 1",// можно менять
                     "groupGoal": 204, // можно менять
+                    "minAvgDifficulty": 30.0, //можно менять
                     "ownerName": "Prof. Jane Roe Biba",
                     "ownerId": 2
                 }
@@ -172,6 +178,7 @@ response
         "id": 1,
         "name": "Basic Course 2024",
         "groupGoal": 110,
+        "minAvgDifficulty": 30.0,
         "ownerName": "Dr. John Doe",
         "ownerId": 1
     },
@@ -179,6 +186,7 @@ response
         "id": 2,
         "name": "Basic Course 2025",
         "groupGoal": 100,
+        "minAvgDifficulty": 30.0,
         "ownerName": "Dr. John Doe",
         "ownerId": 1
     },
@@ -186,6 +194,7 @@ response
         "id": 3,
         "name": "Advanced Course 2025",
         "groupGoal": 150,
+        "minAvgDifficulty": 30.0,
         "ownerName": "Prof. Jane Roe",
         "ownerId": 2
     },
@@ -230,6 +239,15 @@ response
         ]
     }
 
+    http://localhost:8080/api/v1/groups/{group_id}/result
+    {
+        "groupId": 5,
+        "groupGoal": 2,
+        "currentGroupScore": 6,
+        "failingStudents": [], //если succsess==false то тут будут студенты,которые не выполнили
+                                    student goal
+        "success": true
+    }
 
 
 

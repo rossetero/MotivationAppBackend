@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTOWithMembers;
+import ru.kpfu.MotivationAppBackend.dto.GroupResultDTO;
 import ru.kpfu.MotivationAppBackend.repository.GroupRepository;
 import ru.kpfu.MotivationAppBackend.service.GroupService;
 
@@ -31,5 +32,11 @@ public class GroupControllerImpl implements GroupController {
     @Override
     public GroupDTOWithMembers getGroupWithMembers(@PathVariable Long groupId){
         return groupService.getGroupWithMembers(groupId);
+    }
+
+    @GetMapping("/groups/{groupId}/result")
+    @Override
+    public GroupResultDTO getGroupResult(Long groupId) {
+        return groupService.getGroupResult(groupId);
     }
 }
