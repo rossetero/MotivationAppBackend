@@ -1,6 +1,7 @@
 package ru.kpfu.MotivationAppBackend.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public interface StudentController {
     List<StudentTaskInfoDTO> getStudentTaskListByPlatform(@PathVariable Long userId, @PathVariable String platform);
 
     @PutMapping("/tasks/addTask")
-    ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId);
+    ResponseEntity<Pair<Double,Integer>> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId);
 
     @GetMapping("/profile")
     StudentProfileDTO getStudentProfile(@PathVariable Long userId);

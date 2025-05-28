@@ -41,20 +41,25 @@ public class StudentServiceImpl implements StudentService {
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId, platform);
     }
 
-    private void incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
+    private Pair<Double,Integer> incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         StudentGroup sg = student.getParticipatedGroups().getFirst();
         Group g = sg.getGroup();
         double normalizedDiff = taskService.normalizeDiff(addTaskDTO.getDifficulty(),addTaskDTO.getPlatform());
+        int score = 0;
+        int taskScore = 0;
         if (normalizedDiff >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
-            sg.setStudentCurrentScore((int) (sg.getStudentCurrentScore() + 1 + Math.round(normalizedDiff*2/100)));
+            taskScore = (int)(1 + Math.round(normalizedDiff*2/100));
+            score = sg.getStudentCurrentScore() + taskScore;
+            sg.setStudentCurrentScore(score);
             studentGroupRepository.save(sg);
         }
+        return Pair.of(normalizedDiff,taskScore);
     }
 
     @Override
-    public void addTask(AddTaskDTO addTaskDTO, Long studentId) {
+    public Pair<Double,Integer> addTask(AddTaskDTO addTaskDTO, Long studentId) {
         addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
         Optional<StudentTaskInfoDTO> relation = studentTaskRepository.
                 findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),
@@ -76,7 +81,7 @@ public class StudentServiceImpl implements StudentService {
         } else {
             System.out.println("No new content");
         }
-        incrementCurrentScore(addTaskDTO,studentId);
+        return incrementCurrentScore(addTaskDTO,studentId);
     }
 
     @Override

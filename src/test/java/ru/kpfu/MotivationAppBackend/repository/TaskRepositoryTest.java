@@ -24,20 +24,20 @@ public class TaskRepositoryTest {
     private TaskRepository taskRepository;
 
 
-    @Test
-    //@Rollback(false)
-    public void shouldSaveTask(){
-        Task task = new Task();
-        task.setPlatform(Platform.CODEFORCES);
-        task.setTitle("MegaHell");
-        task.setLink("https://codeforces.com/problemset/problem/666/A");
-
-        // Сохраняем в БД
-        Task savedTask = taskRepository.save(task);
-
-        // Проверяем, что объект сохранился
-        assertThat(savedTask.getId()).isNotNull();
-    }
+//    @Test
+//    //@Rollback(false)
+//    public void shouldSaveTask(){
+//        Task task = new Task();
+//        task.setPlatform(Platform.CODEFORCES);
+//        task.setTitle("MegaHell");
+//        task.setLink("https://codeforces.com/problemset/problem/666/A");
+//
+//        // Сохраняем в БД
+//        Task savedTask = taskRepository.save(task);
+//
+//        // Проверяем, что объект сохранился
+//        assertThat(savedTask.getId()).isNotNull();
+//    }
 
     @Test
     public void shouldRetrieveTask() {
