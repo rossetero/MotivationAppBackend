@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTOWithMembers;
 import ru.kpfu.MotivationAppBackend.dto.GroupResultDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTO;
+import ru.kpfu.MotivationAppBackend.dto.StudentProfileDTOEnchanced;
 import ru.kpfu.MotivationAppBackend.entity.Group;
 import ru.kpfu.MotivationAppBackend.entity.Student;
 import ru.kpfu.MotivationAppBackend.entity.StudentGroup;
@@ -31,21 +32,25 @@ public class GroupServiceImpl implements GroupService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("Group not found"));
 
-        List<StudentProfileDTO> members = group.getMembers().stream()
+        List<StudentProfileDTOEnchanced> members = group.getMembers().stream()
                 .map(studentGroup -> {
                     Student student = studentGroup.getStudent();
-                    return new StudentProfileDTO(
+                    return new StudentProfileDTOEnchanced(
                             student.getId(),
                             student.getLogin(),
                             student.getName(),
                             student.getCfHandler(),
-                            student.getAcmpId()
+                            student.getAcmpId(),
+                            studentGroup.getStudentGoal(),
+                            studentGroup.getStudentCurrentScore()
                     );
                 }).toList();
 
         return new GroupDTOWithMembers(
                 group.getId(),
                 group.getName(),
+                group.getGoalSetTime(),
+                group.getDueDate(),
                 group.getGroupGoal(),
                 group.getMinAvgDifficulty(),
                 group.getOwner().getName(),

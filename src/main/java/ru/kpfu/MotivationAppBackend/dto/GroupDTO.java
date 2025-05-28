@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,6 +16,7 @@ public class GroupDTO {
     private String name;
     private int groupGoal;
     private double minAvgDifficulty;
+    private LocalDate dueDate; //yyyy-mm-dd
     private String ownerName;
     private Long ownerId;
 }

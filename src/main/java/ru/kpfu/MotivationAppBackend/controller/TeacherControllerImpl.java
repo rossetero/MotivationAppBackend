@@ -8,6 +8,7 @@ import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
 import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
 import ru.kpfu.MotivationAppBackend.service.TeacherService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -62,8 +63,8 @@ public class TeacherControllerImpl implements TeacherController {
 
     @PostMapping("/groups/create")
     @Override
-    public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal, @RequestParam(value = "minAvgDifficulty") double minAvgDifficulty) {
-        return teacherService.createGroup(userId, name, groupGoal, minAvgDifficulty);
+    public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal, @RequestParam(value = "minAvgDifficulty") double minAvgDifficulty,@RequestParam(value = "dueDate") LocalDate dueDate) {
+        return teacherService.createGroup(userId, name, groupGoal, minAvgDifficulty,dueDate);
     }
 
 

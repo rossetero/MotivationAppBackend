@@ -25,7 +25,7 @@ create table IF NOT EXISTS tasks (
 	id bigserial primary key not null,
 	platform varchar(20) not null,
 	title varchar(200) not null,
-	difficulty real CHECK (difficulty >= 1 AND difficulty <= 100),,
+	difficulty real CHECK (difficulty >= 1 AND difficulty <= 100),
 	link varchar(100) not null
 );
 
@@ -52,6 +52,7 @@ create table IF NOT EXISTS groups(
     group_goal integer,
 	min_avg_difficulty real CHECK (min_avg_difficulty >= 1 AND min_avg_difficulty <= 100),
 	goal_set_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	due_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	owner_id bigint not null,
 	foreign key(owner_id) references teachers(id)
 );

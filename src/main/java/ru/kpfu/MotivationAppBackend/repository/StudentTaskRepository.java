@@ -20,7 +20,8 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
         studentTask.task.title,
         studentTask.task.difficulty,
         studentTask.task.link,
-        studentTask.verdict
+        studentTask.verdict,
+        studentTask.lastChangedTime
     )
     FROM StudentTask studentTask
     WHERE studentTask.student.id = :studentId
@@ -33,7 +34,8 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
         studentTask.task.title,
         studentTask.task.difficulty,
         studentTask.task.link,
-        studentTask.verdict
+        studentTask.verdict,
+        studentTask.lastChangedTime
     )
     FROM StudentTask studentTask
     WHERE studentTask.student.id = :studentId and studentTask.task.platform = :platform
@@ -47,7 +49,8 @@ public interface StudentTaskRepository extends JpaRepository<StudentTask,Long> {
         studentTask.task.title,
         studentTask.task.difficulty,
         studentTask.task.link,
-        studentTask.verdict
+        studentTask.verdict,
+        studentTask.lastChangedTime
     )
     FROM StudentTask studentTask
     WHERE studentTask.student.id = :studentId

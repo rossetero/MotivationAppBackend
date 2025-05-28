@@ -9,6 +9,8 @@ import lombok.*;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.enums.Verdict;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,12 +28,14 @@ public class StudentTaskInfoDTO {
     private String link;
     @NotBlank
     private Verdict verdict;
+    private LocalDateTime lastChangedTime;
 
-    public StudentTaskInfoDTO(Platform platform, String title,double difficulty, String link, Verdict verdict) {
+    public StudentTaskInfoDTO(Platform platform, String title,double difficulty, String link, Verdict verdict,LocalDateTime lastChangedTime) {
         this.platform = platform;
         this.title = title;
         this.difficulty = difficulty;
         this.link = link;
         this.verdict = verdict;
+        this.lastChangedTime=lastChangedTime;
     }
 }

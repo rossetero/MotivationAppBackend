@@ -12,7 +12,10 @@ import ru.kpfu.MotivationAppBackend.repository.StudentGroupRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.TeacherRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,10 +72,11 @@ public class TeacherServiceImpl implements TeacherService {
         if (teacherGroupIds.contains(groupId)) {
             Group g = groupRepository.findById(groupId).orElseThrow(RuntimeException::new);
             g.setName(groupDTO.getName());
-            if(g.getGroupGoal()!=groupDTO.getGroupGoal() || g.getMinAvgDifficulty()!=groupDTO.getMinAvgDifficulty()){
+            if(g.getGroupGoal()!=groupDTO.getGroupGoal() || g.getMinAvgDifficulty()!=groupDTO.getMinAvgDifficulty() || g.getDueDate()!=groupDTO.getDueDate()){
                 g.setGroupGoal(groupDTO.getGroupGoal());
                 g.setMinAvgDifficulty(groupDTO.getMinAvgDifficulty());
                 g.setGoalSetTime(LocalDateTime.now());
+                g.setDueDate(groupDTO.getDueDate());
                 f=true;
             }
             groupRepository.save(g);
@@ -82,8 +86,18 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
+//    private LocalDateTime convertToLocalDateTime(String dateString) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+//        try {
+//            return LocalDateTime.parse(dateString, formatter);
+//        } catch (DateTimeParseException e) {
+//            System.out.println("Ошибка при парсинге даты: " + e.getMessage());
+//            throw new RuntimeException("DueDate Parsing error");
+//        }
+//    }
+
     @Override
-    public GroupDTO createGroup(Long teacherId, String name, int groupGoal,double minAvgDifficulty) {
+    public GroupDTO createGroup(Long teacherId, String name, int groupGoal, double minAvgDifficulty, LocalDate dueDate) { //dd.mm.yy
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(RuntimeException::new);
         Group group = new Group();
         group.setName(name);
@@ -91,6 +105,7 @@ public class TeacherServiceImpl implements TeacherService {
         group.setMinAvgDifficulty(minAvgDifficulty);
         group.setOwner(teacher);
         group.setGoalSetTime(LocalDateTime.now());
+        group.setDueDate(dueDate);
         groupRepository.save(group);
         return groupRepository.findAllGroupDTOsForOwner(teacherId).getLast();
     }
@@ -119,27 +134,4 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-//    @Override
-//    public void addTask(AddTaskDTO addTaskDTO, Long studentId) {
-//        addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
-//        Optional<StudentTaskInfoDTO> relation = studentTaskRepository.
-//                findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),
-//                        addTaskDTO.getTitle(), addTaskDTO.getLink());
-//        if (relation.isEmpty()) {
-//            taskService.addTaskIfNotExists(addTaskDTO);
-//            Task task = taskService.findByTitleAndLink(addTaskDTO.getTitle(), addTaskDTO.getLink()).orElseThrow(RuntimeException::new);
-//            StudentTask studentTask = new StudentTask();
-//            studentTask.setStudent(studentRepository.findById(studentId).orElseThrow(RuntimeException::new));
-//            studentTask.setTask(task);
-//            studentTask.setVerdict(addTaskDTO.getVerdict());
-//            studentTaskRepository.save(studentTask);
-//        } else if(relation.get().getVerdict()!=addTaskDTO.getVerdict()) {
-//            //StudentTask studentTask = studentTaskRepository.findByStudentId(studentId).orElseThrow(RuntimeException::new);
-//            StudentTask studentTask = studentTaskRepository.findById(relation.get().getId()).orElseThrow(RuntimeException::new);
-//            studentTask.setVerdict(addTaskDTO.getVerdict());
-//            studentTaskRepository.save(studentTask);
-//        } else {
-//            System.out.println("No new content");
-//        }
-//    }
 }

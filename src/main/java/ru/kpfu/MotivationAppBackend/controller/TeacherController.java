@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
 import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TeacherController {
@@ -31,5 +32,5 @@ public interface TeacherController {
     ResponseEntity<String> addStudentInGroup(Long userId, Long groupId, String studentLogin,int studentGoal);
 
     @PostMapping("/groups/create")
-    GroupDTO createGroup(Long userId, String name,int groupGoal,double minAvgDifficulty);
+    GroupDTO createGroup(Long userId, String name,int groupGoal,double minAvgDifficulty, LocalDate dueDate);
 }

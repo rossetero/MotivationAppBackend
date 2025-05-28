@@ -126,6 +126,8 @@ public class StudentServiceImpl implements StudentService {
     public List<Pair<Double, Integer>> syncWithCodeforces(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        if (student.getCfHandler() == null)
+            throw new RuntimeException("CF HANDLER IS NULL");
         int currentAmountOfTasks = getStudentTaskListByPlatform(studentId,Platform.CODEFORCES).size();
         System.out.println("========== AMOUNTTask==========");
         System.out.println(currentAmountOfTasks);

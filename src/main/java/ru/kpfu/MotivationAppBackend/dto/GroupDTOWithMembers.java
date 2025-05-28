@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,10 +17,12 @@ public class GroupDTOWithMembers {
 
         private Long id;
         private String name;
+        private LocalDateTime goalSetTime;
+        private LocalDate dueDate;
         private int groupGoal;
         private double minAvgDifficulty;
         private String ownerName;
         private Long ownerId;
-        private List<StudentProfileDTO> members;
+        private List<StudentProfileDTOEnchanced> members;
 
 }
