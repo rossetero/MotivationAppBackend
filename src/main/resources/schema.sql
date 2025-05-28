@@ -52,7 +52,7 @@ create table IF NOT EXISTS groups(
     group_goal integer,
 	min_avg_difficulty real CHECK (min_avg_difficulty >= 1 AND min_avg_difficulty <= 100),
 	goal_set_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	due_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	due_date DATE DEFAULT CURRENT_DATE,
 	owner_id bigint not null,
 	foreign key(owner_id) references teachers(id)
 );
