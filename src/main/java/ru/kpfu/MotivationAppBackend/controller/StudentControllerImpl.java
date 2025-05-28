@@ -38,9 +38,9 @@ public class StudentControllerImpl implements StudentController {
 
     @PutMapping("/tasks/addTask")
     @Override
-    public ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId) {
-        studentService.addTask(addTaskDTO, userId);
-        return ResponseEntity.ok("Task Added");
+    public ResponseEntity<Integer> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId) {
+        int score = studentService.addTask(addTaskDTO, userId);
+        return ResponseEntity.ok(score);
     }
 
     @GetMapping("/profile")

@@ -21,7 +21,7 @@ public interface StudentController {
     List<StudentTaskInfoDTO> getStudentTaskListByPlatform(@PathVariable Long userId, @PathVariable String platform);
 
     @PutMapping("/tasks/addTask")
-    ResponseEntity<String> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId);
+    ResponseEntity<Integer> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId);
 
     @GetMapping("/profile")
     StudentProfileDTO getStudentProfile(@PathVariable Long userId);

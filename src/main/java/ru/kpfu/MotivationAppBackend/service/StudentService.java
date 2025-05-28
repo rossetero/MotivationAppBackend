@@ -13,7 +13,7 @@ import java.util.List;
 public interface StudentService {
     List<StudentTaskInfoDTO> getStudentTaskList(Long studentId);
     List<StudentTaskInfoDTO> getStudentTaskListByPlatform(Long studentId, Platform platform);
-    void addTask(AddTaskDTO addTaskDTO, Long studentId);
+    int addTask(AddTaskDTO addTaskDTO, Long studentId);
     StudentProfileDTO getStudentProfile(Long studentId);
     void editStudentProfile(StudentProfileDTO studentProfileDTO, Long studentId);
     List<StudentGoalsDTO> getParticipatedGroups(Long studentId);
