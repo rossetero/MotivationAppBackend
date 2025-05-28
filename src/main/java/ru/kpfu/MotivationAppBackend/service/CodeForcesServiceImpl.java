@@ -1,0 +1,57 @@
+package ru.kpfu.MotivationAppBackend.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
+import ru.kpfu.MotivationAppBackend.dto.сf.ResponseDTO;
+import ru.kpfu.MotivationAppBackend.dto.сf.SubmissionDTO;
+import ru.kpfu.MotivationAppBackend.enums.Platform;
+import ru.kpfu.MotivationAppBackend.enums.Verdict;
+
+import java.util.List;
+import java.util.Objects;
+
+@Service
+public class CodeForcesServiceImpl {
+
+
+    private final RestTemplate restTemplate;
+
+    @Autowired
+    public CodeForcesServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    private List<SubmissionDTO> getStudentCfSubmissions(String handle) {
+        String url = "https://codeforces.com/api/user.status?lang=ru&handle=" + handle;
+        ResponseDTO response = restTemplate.getForObject(url, ResponseDTO.class);
+
+        if (response != null && "OK".equalsIgnoreCase(response.getStatus())) {
+            return response.getResult();
+        }
+
+        throw new RuntimeException("Codeforces API returned error or empty response");
+
+    }
+
+    public List<AddTaskDTO> getTaskFromSubmissions(String handle) {
+
+        return getStudentCfSubmissions(handle).stream().map(this::mapperSubmissionTask).toList();
+    }
+
+    private AddTaskDTO mapperSubmissionTask(SubmissionDTO submissionDTO) {
+        AddTaskDTO mappedTask = new AddTaskDTO();
+        mappedTask.setPlatform(Platform.CODEFORCES);
+        mappedTask.setTitle(submissionDTO.getProblem().getName());
+        mappedTask.setDifficulty(submissionDTO.getProblem().getRating());
+        String link = "https://codeforces.com/problemset/problem/" +
+                +submissionDTO.getProblem().getContestId() + "/" + submissionDTO.getProblem().getIndex();
+        mappedTask.setLink(link);
+        String strVerdict = submissionDTO.getVerdict();
+        Verdict verdict = strVerdict.equals("OK") ? Verdict.SUCCESS : Verdict.FAIL;
+        mappedTask.setVerdict(verdict);
+        return mappedTask;
+    }
+
+}
