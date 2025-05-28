@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId, platform);
     }
 
-    private int incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
+    private Pair<Double,Integer> incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         StudentGroup sg = student.getParticipatedGroups().getFirst();
@@ -55,11 +55,11 @@ public class StudentServiceImpl implements StudentService {
             sg.setStudentCurrentScore(score);
             studentGroupRepository.save(sg);
         }
-        return taskScore;
+        return Pair.of(normalizedDiff,taskScore);
     }
 
     @Override
-    public int addTask(AddTaskDTO addTaskDTO, Long studentId) {
+    public Pair<Double,Integer> addTask(AddTaskDTO addTaskDTO, Long studentId) {
         addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
         Optional<StudentTaskInfoDTO> relation = studentTaskRepository.
                 findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),

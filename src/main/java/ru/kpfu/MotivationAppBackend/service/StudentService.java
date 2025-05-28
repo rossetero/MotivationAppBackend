@@ -1,5 +1,6 @@
 package ru.kpfu.MotivationAppBackend.service;
 
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
 import ru.kpfu.MotivationAppBackend.dto.StudentGoalsDTO;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface StudentService {
     List<StudentTaskInfoDTO> getStudentTaskList(Long studentId);
     List<StudentTaskInfoDTO> getStudentTaskListByPlatform(Long studentId, Platform platform);
-    int addTask(AddTaskDTO addTaskDTO, Long studentId);
+    Pair<Double,Integer> addTask(AddTaskDTO addTaskDTO, Long studentId);
     StudentProfileDTO getStudentProfile(Long studentId);
     void editStudentProfile(StudentProfileDTO studentProfileDTO, Long studentId);
     List<StudentGoalsDTO> getParticipatedGroups(Long studentId);

@@ -2,6 +2,7 @@ package ru.kpfu.MotivationAppBackend.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
@@ -38,9 +39,9 @@ public class StudentControllerImpl implements StudentController {
 
     @PutMapping("/tasks/addTask")
     @Override
-    public ResponseEntity<Integer> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId) {
-        int score = studentService.addTask(addTaskDTO, userId);
-        return ResponseEntity.ok(score);
+    public ResponseEntity<Pair<Double,Integer>> addTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId) {
+        Pair<Double,Integer> diffAndScore = studentService.addTask(addTaskDTO, userId);
+        return ResponseEntity.ok(diffAndScore);
     }
 
     @GetMapping("/profile")
