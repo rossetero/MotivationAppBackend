@@ -10,6 +10,8 @@ import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.enums.Verdict;
 
 import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CodeForcesServiceImpl {
@@ -35,8 +37,15 @@ public class CodeForcesServiceImpl {
     }
 
     public List<AddTaskDTO> getTaskFromSubmissions(String handle) {
-
-        return getStudentCfSubmissions(handle).stream().map(this::mapperSubmissionTask).toList();
+        List<AddTaskDTO> l = getStudentCfSubmissions(handle).stream()
+                .map(this::mapperSubmissionTask)
+                .collect(Collectors.toMap(AddTaskDTO::getLink, t -> t, (e, r) -> e, LinkedHashMap::new))
+                .values().stream()
+                .toList();
+        System.out.println("========== getTaskFromSubmissions==========");
+        System.out.println(l);
+        System.out.println("========== getTaskFromSubmissions==========");
+        return l;
     }
 
     private AddTaskDTO mapperSubmissionTask(SubmissionDTO submissionDTO) {

@@ -126,9 +126,21 @@ public class StudentServiceImpl implements StudentService {
     public List<Pair<Double, Integer>> syncWithCodeforces(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
-        List<AddTaskDTO> taskFromCF = codeForcesService.getTaskFromSubmissions(student.getCfHandler()).reversed();
+        int currentAmountOfTasks = getStudentTaskListByPlatform(studentId,Platform.CODEFORCES).size();
+        System.out.println("========== AMOUNTTask==========");
+        System.out.println(currentAmountOfTasks);
+        System.out.println("========== AMOUNTTask==========");
+        List<AddTaskDTO> tasksFromCF = codeForcesService.getTaskFromSubmissions(student.getCfHandler())
+                .reversed();
+        System.out.println("========== TasksFROM CF==========");
+        System.out.println(tasksFromCF);
+        System.out.println("========== TasksFROM CF==========");
+        List<AddTaskDTO> newTasksFromCF = tasksFromCF.subList(currentAmountOfTasks,tasksFromCF.size());
+        System.out.println("==========NEEEW TasksFROM CF==========");
+        System.out.println(newTasksFromCF);
+        System.out.println("==========NEEEW TasksFROM CF==========");
         List<Pair<Double, Integer>> diffAndScoreList = new ArrayList<>();
-        for( AddTaskDTO taskDTO : taskFromCF){
+        for( AddTaskDTO taskDTO : newTasksFromCF){
             diffAndScoreList.add(addTask(taskDTO,studentId));
         }
         return diffAndScoreList;
