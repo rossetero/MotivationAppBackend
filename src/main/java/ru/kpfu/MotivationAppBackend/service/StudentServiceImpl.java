@@ -13,6 +13,7 @@ import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentTaskRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +23,15 @@ public class StudentServiceImpl implements StudentService {
     private final StudentTaskRepository studentTaskRepository;
     private final StudentGroupRepository studentGroupRepository;
     private final TaskService taskService;
+    private final CodeForcesServiceImpl codeForcesService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService, CodeForcesServiceImpl codeForcesService) {
         this.studentRepository = studentRepository;
         this.studentTaskRepository = studentTaskRepository;
         this.studentGroupRepository = studentGroupRepository;
         this.taskService = taskService;
+        this.codeForcesService = codeForcesService;
     }
 
     @Override
@@ -117,6 +120,18 @@ public class StudentServiceImpl implements StudentService {
                 }
         ).toList();
 
+    }
+
+    @Override
+    public List<Pair<Double, Integer>> syncWithCodeforces(Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        List<AddTaskDTO> taskFromCF = codeForcesService.getTaskFromSubmissions(student.getCfHandler()).reversed();
+        List<Pair<Double, Integer>> diffAndScoreList = new ArrayList<>();
+        for( AddTaskDTO taskDTO : taskFromCF){
+            diffAndScoreList.add(addTask(taskDTO,studentId));
+        }
+        return diffAndScoreList;
     }
 
     private String removePrefix(String url) {

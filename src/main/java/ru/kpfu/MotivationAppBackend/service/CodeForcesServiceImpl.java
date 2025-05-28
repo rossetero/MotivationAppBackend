@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
-import ru.kpfu.MotivationAppBackend.dto.сf.ResponseDTO;
-import ru.kpfu.MotivationAppBackend.dto.сf.SubmissionDTO;
+import ru.kpfu.MotivationAppBackend.dto.cf.ResponseDTO;
+import ru.kpfu.MotivationAppBackend.dto.cf.SubmissionDTO;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.enums.Verdict;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CodeForcesServiceImpl {

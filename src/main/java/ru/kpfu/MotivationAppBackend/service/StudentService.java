@@ -18,4 +18,5 @@ public interface StudentService {
     StudentProfileDTO getStudentProfile(Long studentId);
     void editStudentProfile(StudentProfileDTO studentProfileDTO, Long studentId);
     List<StudentGoalsDTO> getParticipatedGroups(Long studentId);
+    List<Pair<Double,Integer>> syncWithCodeforces(Long studentId);
 }

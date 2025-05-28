@@ -1,8 +1,6 @@
-package ru.kpfu.MotivationAppBackend.dto.сf;
+package ru.kpfu.MotivationAppBackend.dto.cf;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 

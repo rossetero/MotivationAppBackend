@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GroupResultDTO {
     private Long groupId;
+    private double minDifficulty;
     private int groupGoal;
     private int currentGroupScore;
     private boolean isSuccess;

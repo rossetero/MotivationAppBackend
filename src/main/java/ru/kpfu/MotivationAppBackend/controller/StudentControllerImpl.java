@@ -62,5 +62,11 @@ public class StudentControllerImpl implements StudentController {
         return ResponseEntity.ok("Profile Updated");
     }
 
+    @Override
+    public ResponseEntity<List<Pair<Double, Integer>>> syncWithCodeforces(Long userId) {
+        List<Pair<Double, Integer>> diffAndScoreList = studentService.syncWithCodeforces(userId);
+        return ResponseEntity.ok(diffAndScoreList);
+    }
+
 
 }

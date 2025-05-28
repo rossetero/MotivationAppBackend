@@ -1,4 +1,4 @@
-package ru.kpfu.MotivationAppBackend.dto.сf;
+package ru.kpfu.MotivationAppBackend.dto.cf;
 
 import lombok.Data;
 

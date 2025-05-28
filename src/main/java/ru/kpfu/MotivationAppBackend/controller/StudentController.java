@@ -32,4 +32,7 @@ public interface StudentController {
 
     @PutMapping("/profile/edit")
     ResponseEntity<String> editStudentProfile(@RequestBody @Valid StudentProfileDTO studentProfileDTO, @PathVariable Long userId);
+
+    @PutMapping("/tasks/sync")
+   ResponseEntity<List<Pair<Double,Integer>>> syncWithCodeforces(@PathVariable Long userId);
 }
