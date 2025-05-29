@@ -67,6 +67,6 @@ public class GroupServiceImpl implements GroupService {
         int currentGroupScore = members.stream().mapToInt(StudentGroup::getStudentCurrentScore).sum();
         List<String> failingStudents = members.stream().filter(m-> m.getStudentCurrentScore()<m.getStudentGoal()).map(m->m.getStudent().getName()).toList();
         boolean isSuccess = (currentGroupScore >= group.getGroupGoal()) && failingStudents.isEmpty();
-        return new GroupResultDTO(groupId,group.getMinAvgDifficulty(), group.getGroupGoal(),currentGroupScore,isSuccess,failingStudents);
+        return new GroupResultDTO(groupId,group.getDueDate(), group.getMinAvgDifficulty(), group.getGroupGoal(),currentGroupScore,isSuccess,failingStudents);
     }
 }
