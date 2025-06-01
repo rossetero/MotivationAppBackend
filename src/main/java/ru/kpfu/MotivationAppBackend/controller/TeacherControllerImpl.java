@@ -43,28 +43,34 @@ public class TeacherControllerImpl implements TeacherController {
 
     @GetMapping("/groups/{groupId}")
     @Override
-    public GroupDTO getTeachersGroupInfo(@PathVariable Long userId,@PathVariable Long groupId) {
-        return teacherService.getTeachersGroupInfo(userId,groupId);
+    public GroupDTO getTeachersGroupInfo(@PathVariable Long userId, @PathVariable Long groupId) {
+        return teacherService.getTeachersGroupInfo(userId, groupId);
     }
 
     @PutMapping("/groups/{groupId}/edit")
     @Override
     public ResponseEntity<String> editTeachersGroupInfo(@RequestBody @Valid GroupDTO groupDTO, @PathVariable Long userId, @PathVariable Long groupId) {
-        teacherService.editTeachersGroup(groupDTO,userId,groupId);
+        teacherService.editTeachersGroup(groupDTO, userId, groupId);
         return ResponseEntity.ok("Group updated");
     }
 
     @PutMapping("/groups/{groupId}/addStudent")
     @Override
-    public ResponseEntity<String> addStudentInGroup(@PathVariable Long userId,@PathVariable Long groupId,@RequestParam(value = "studentLogin") String studentLogin,@RequestParam(value = "studentGoal") int studentGoal) {
-        teacherService.addStudentInGroup(userId,groupId,studentLogin,studentGoal);
+    public ResponseEntity<String> addStudentInGroup(@PathVariable Long userId, @PathVariable Long groupId, @RequestParam(value = "studentLogin") String studentLogin, @RequestParam(value = "studentGoal") int studentGoal) {
+        teacherService.addStudentInGroup(userId, groupId, studentLogin, studentGoal);
         return ResponseEntity.ok("Student added");
     }
 
     @PostMapping("/groups/create")
     @Override
-    public GroupDTO createGroup(@PathVariable Long userId,@RequestParam(value = "name") String name,@RequestParam(value = "groupGoal") int groupGoal, @RequestParam(value = "minAvgDifficulty") double minAvgDifficulty,@RequestParam(value = "dueDate") LocalDate dueDate) {
-        return teacherService.createGroup(userId, name, groupGoal, minAvgDifficulty,dueDate);
+    public GroupDTO createGroup(@PathVariable Long userId,
+                                @RequestParam(value = "name") String name,
+                                @RequestParam(value = "groupGoal") int groupGoal,
+                                @RequestParam(value = "minAvgDifficulty") double minAvgDifficulty,
+                                @RequestParam(value = "dueDate") LocalDate dueDate,
+                                @RequestParam(value = "easyMediumThreshold") double easyMediumThreshold,
+                                @RequestParam(value = "mediumHardThreshold") double mediumHardThreshold) {
+        return teacherService.createGroup(userId, name, groupGoal, minAvgDifficulty, dueDate,easyMediumThreshold,mediumHardThreshold);
     }
 
 

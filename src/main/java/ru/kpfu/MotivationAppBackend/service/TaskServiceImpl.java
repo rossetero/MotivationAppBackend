@@ -39,6 +39,7 @@ public class TaskServiceImpl implements TaskService {
         if (!(taskRepository.existsByTitle(addTaskDTO.getTitle()) && taskRepository.existsByLink(addTaskDTO.getLink()))) {
             Task newTask = new Task();
             newTask.setPlatform(addTaskDTO.getPlatform());
+            newTask.setNumber(addTaskDTO.getNumber());
             newTask.setTitle(addTaskDTO.getTitle());
             newTask.setDifficulty(normalizeDiff(addTaskDTO.getDifficulty(),addTaskDTO.getPlatform()));
             newTask.setLink(addTaskDTO.getLink());

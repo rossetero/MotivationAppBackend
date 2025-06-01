@@ -18,6 +18,8 @@ public class AddTaskDTO {
     @Enumerated(EnumType.STRING)
     private Platform platform;
     @NotBlank
+    private String number;
+    @NotBlank
     private String title;
     @NotNull
     private double difficulty;

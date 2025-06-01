@@ -32,5 +32,5 @@ public interface TeacherController {
     ResponseEntity<String> addStudentInGroup(Long userId, Long groupId, String studentLogin,int studentGoal);
 
     @PostMapping("/groups/create")
-    GroupDTO createGroup(Long userId, String name,int groupGoal,double minAvgDifficulty, LocalDate dueDate);
+    GroupDTO createGroup(Long userId, String name,int groupGoal,double minAvgDifficulty, LocalDate dueDate,double easyMediumThreshold, double mediumHardThreshold);
 }

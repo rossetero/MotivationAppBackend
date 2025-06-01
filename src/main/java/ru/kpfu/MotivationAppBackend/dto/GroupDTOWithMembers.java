@@ -21,6 +21,8 @@ public class GroupDTOWithMembers {
         private LocalDate dueDate;
         private int groupGoal;
         private double minAvgDifficulty;
+        private double easyMediumThreshold; //с какой сложности задача считается средней
+        private double mediumHardThreshold; //с какой сложности задача считается сложной
         private String ownerName;
         private Long ownerId;
         private List<StudentProfileDTOEnchanced> members;

@@ -25,6 +25,8 @@ public class Group {
     private double minAvgDifficulty;
     private LocalDateTime goalSetTime;
     private LocalDate dueDate;
+    private double easyMediumThreshold;
+    private double mediumHardThreshold;
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private List<StudentGroup> members;

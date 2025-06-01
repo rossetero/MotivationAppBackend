@@ -2,6 +2,7 @@ package ru.kpfu.MotivationAppBackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.JSqlParserUtils;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import ru.kpfu.MotivationAppBackend.dto.*;
@@ -44,17 +45,32 @@ public class StudentServiceImpl implements StudentService {
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId, platform);
     }
 
+    private int getTaskScore(double normalizedDiff, Group g){
+        double easyMediumThreshold = g.getEasyMediumThreshold();
+        double mediumThreshold = g.getMediumHardThreshold();
+        if (normalizedDiff<=easyMediumThreshold){
+            System.out.println("=====EASY======");
+            return 1;
+        } else if (normalizedDiff<mediumThreshold) {
+            System.out.println("====MEDIUM=====");
+            return 2;
+        } else {
+            System.out.println("=====HARD====");
+            return 3;
+        }
+
+    }
+
     private Pair<Double,Integer> incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         StudentGroup sg = student.getParticipatedGroups().getFirst();
         Group g = sg.getGroup();
         double normalizedDiff = taskService.normalizeDiff(addTaskDTO.getDifficulty(),addTaskDTO.getPlatform());
-        int score = 0;
         int taskScore = 0;
         if (normalizedDiff >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
-            taskScore = (int)(1 + Math.round(normalizedDiff*2/100));
-            score = sg.getStudentCurrentScore() + taskScore;
+            taskScore = getTaskScore(normalizedDiff,g);
+            int score = sg.getStudentCurrentScore() + taskScore;
             sg.setStudentCurrentScore(score);
             studentGroupRepository.save(sg);
         }
@@ -109,7 +125,6 @@ public class StudentServiceImpl implements StudentService {
         return student.getParticipatedGroups().stream().map(
                 studentGroup -> {
                     Group g = studentGroup.getGroup();
-                    int goal = studentGroup.getStudentGoal();
                     return new StudentGoalsDTO(
                             g.getId(),
                             g.getName(),

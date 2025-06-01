@@ -21,6 +21,8 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Platform platform;
     @NotNull
+    private String number;
+    @NotNull
     private String title;
     private double difficulty;
     @NotNull

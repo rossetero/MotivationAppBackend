@@ -17,6 +17,8 @@ public class GroupDTO {
     private int groupGoal;
     private double minAvgDifficulty;
     private LocalDate dueDate; //yyyy-mm-dd
+    private double easyMediumThreshold; //с какой сложности задача считается средней
+    private double mediumHardThreshold; //с какой сложности задача считается сложной
     private String ownerName;
     private Long ownerId;
 }

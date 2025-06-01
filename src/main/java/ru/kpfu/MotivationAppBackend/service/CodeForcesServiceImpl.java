@@ -51,6 +51,7 @@ public class CodeForcesServiceImpl {
     private AddTaskDTO mapperSubmissionTask(SubmissionDTO submissionDTO) {
         AddTaskDTO mappedTask = new AddTaskDTO();
         mappedTask.setPlatform(Platform.CODEFORCES);
+        mappedTask.setNumber(submissionDTO.getProblem().getContestId() + submissionDTO.getProblem().getIndex());
         mappedTask.setTitle(submissionDTO.getProblem().getName());
         mappedTask.setDifficulty(submissionDTO.getProblem().getRating());
         String link = "https://codeforces.com/problemset/problem/" +

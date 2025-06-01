@@ -55,15 +55,30 @@
             [
                 {
                     "platform": "CODEFORCES",
+                    "number": "1A",
                     "title": "Two Sum Problem",
+                    "difficulty": 45.0,
                     "link": "codeforces.com/problemset/problem/1/A",
-                    "verdict": "SUCCESS"
+                    "verdict": "SUCCESS",
+                    "lastChangedTime": "2025-06-01T16:55:30.819065"
                 },
                 {
-                    "platform": "LEETCODE",
-                    "title": "Longest Substring Without Repeating Characters",
-                    "link": "leetcode.com/problems/longest-substring-without-repeating-characters/",
-                    "verdict": "SUCCESS"
+                    "platform": "ACMP",
+                    "number": "2B",
+                    "title": "Binary Search Implementation",
+                    "difficulty": 23.0,
+                    "link": "acmp.ru/?main=task&id=2",
+                    "verdict": "FAIL",
+                    "lastChangedTime": "2025-06-01T16:55:30.819065"
+                },
+                {
+                    "platform": "CODEFORCES",
+                    "number": "2094C",
+                    "title": "Брр Бррр Патапим",
+                    "difficulty": 5.0,
+                    "link": "codeforces.com/problemset/problem/2094/C",
+                    "verdict": "SUCCESS",
+                    "lastChangedTime": "2025-06-01T17:32:20.392584"
                 }
             ]
 
@@ -73,10 +88,11 @@
             !!! Для каждой платформы свой диапазон значений. Для LeetCode следай пожалуйста
             на фронте какой-нибудь конвертер, который бы переводил EASY, MEDIUM, HARD в 1,2,3 cоответственно
             {
-                "platform": "CODEFORCES",
-                "title": "Very Hard Problem",
-                "difficulty": 1000,
-                "link": "http://codeforces.ru/777/A",
+                "platform": "ACMP",
+                "number": "0002",
+                "title": "wwwqzzaaaaqfffffggzzzzzzaaq",
+                "difficulty":11,
+                "link": "https://оzggzggaaaagzzgffffgg?main=tas68",
                 "verdict": "SUCCESS"
             }
             // Пример эндпоинта http://localhost:8080/api/v1/users/5/student/tasks/addTask
@@ -120,56 +136,74 @@
         response JSON
         [
             {
-                "id": 4,
-                "name": "СМЕШАРИКИ",
-                "groupGoal": 300,
-                "ownerName": "Prof. Jane Roe Biba",
+                "id": 3,
+                "name": "Advanced Course 2025",
+                "groupGoal": 150,
+                "minAvgDifficulty": 50.0,
+                "dueDate": "2025-06-01",
+                "easyMediumThreshold": 25.0,
+                "mediumHardThreshold": 75.0,
+                "ownerName": "Prof. Jane Roe",
                 "ownerId": 2
             },
             {
-                "id": 3,
-                "name": "Advanced Course 2025 Semestr 1",
-                "groupGoal": 204,
-                "ownerName": "Prof. Jane Roe Biba",
+                "id": 4,
+                "name": "СМЕШАРИКИ",
+                "groupGoal": 300,
+                "minAvgDifficulty": 70.0,
+                "dueDate": "2025-06-01",
+                "easyMediumThreshold": 30.0,
+                "mediumHardThreshold": 70.0,
+                "ownerName": "Prof. Jane Roe",
                 "ownerId": 2
             }
         ]
             /create POST - создать группу
 
-            http://localhost:8080/api/v1/users/1/teacher/groups/create?name=TESTGROUP&groupGoal=300&minAvgDifficulty=30
+            http://localhost:8080/api/v1/users/1/teacher/groups/create?name=CF-SYNC&groupGoal=2&minAvgDifficulty=1&dueDate=2025-06-01&easyMediumThreshold=25&mediumHardThreshold=75
             response JSON
             {
                 "id": 5,
-                "name": "TestCreateGroup",
-                "groupGoal": 300,
-                "minAvgDifficulty": 30.0,
-                "ownerName": "Prof. Jane Roe Biba",
-                "ownerId": 2
+                "name": "CF-SYNC",
+                "groupGoal": 2,
+                "minAvgDifficulty": 1.0,
+                "dueDate": "2025-06-01",
+                "easyMediumThreshold": 25.0,
+                "mediumHardThreshold": 75.0,
+                "ownerName": "Dr. John Doe",
+                "ownerId": 1
             }
 
             /{group_id} - получить информацию о группе с данным group_id если она принаждежит пользователю
             http://localhost:8080/api/v1/users/2/teacher/groups/3
             response JSON
                         {
-                            "id": 3,
-                            "name": "Advanced Course 2025 Semestr 1",
-                            "groupGoal": 204,
-                            "ownerName": "Prof. Jane Roe Biba",
-                            "ownerId": 2
+                            "id": 5,
+                            "name": "CF-SYNC",
+                            "groupGoal": 2,
+                            "minAvgDifficulty": 1.0,
+                            "dueDate": "2025-06-01",
+                            "easyMediumThreshold": 25.0,
+                            "mediumHardThreshold": 75.0,
+                            "ownerName": "Dr. John Doe",
+                            "ownerId": 1
                         }
                 /edit PUT - редактировать группу
                 request JSON
                 {
-                    "id": 3,
-                    "name": "Advanced Course 2025 Semestr 1",// можно менять
-                    "groupGoal": 204, // можно менять
-                    "minAvgDifficulty": 30.0, //можно менять
-                    "ownerName": "Prof. Jane Roe Biba",
-                    "ownerId": 2
+                    "id": 5,
+                    "name": "CF-SYNC",
+                    "groupGoal": 2, //можно менять
+                    "minAvgDifficulty": 1.0, //можно менять
+                    "dueDate": "2025-06-01", //можно менять
+                    "easyMediumThreshold": 25.0, //можно менять
+                    "mediumHardThreshold": 75.0, //можно менять
+                    "ownerName": "Dr. John Doe",
+                    "ownerId": 1
                 }
                 /addStudentInGroup
                http://localhost:8080/api/v1/users/1/teacher/groups/3/addStudent?studentLogin=teststudent&studentGoal=44
-               Все параметры обязательные. Если меняется только studentGoal, будет обновлена существующая запись
+               Все параметры обязательные. Если меняется только studentGoal и студент есть в группе, будет обновлена существующая запись
 
 /groups - секция работы с группами (получить все группы но без участников)
 response
@@ -178,7 +212,10 @@ response
         "id": 1,
         "name": "Basic Course 2024",
         "groupGoal": 110,
-        "minAvgDifficulty": 30.0,
+        "minAvgDifficulty": 1.0,
+        "dueDate": "2025-06-01",
+        "easyMediumThreshold": 40.0,
+        "mediumHardThreshold": 80.0,
         "ownerName": "Dr. John Doe",
         "ownerId": 1
     },
@@ -186,24 +223,12 @@ response
         "id": 2,
         "name": "Basic Course 2025",
         "groupGoal": 100,
-        "minAvgDifficulty": 30.0,
+        "minAvgDifficulty": 1.0,
+        "dueDate": "2025-06-01",
+        "easyMediumThreshold": 10.0,
+        "mediumHardThreshold": 30.0,
         "ownerName": "Dr. John Doe",
         "ownerId": 1
-    },
-    {
-        "id": 3,
-        "name": "Advanced Course 2025",
-        "groupGoal": 150,
-        "minAvgDifficulty": 30.0,
-        "ownerName": "Prof. Jane Roe",
-        "ownerId": 2
-    },
-    {
-        "id": 4,
-        "name": "СМЕШАРИКИ",
-        "groupGoal": 300,
-        "ownerName": "Prof. Jane Roe",
-        "ownerId": 2
     }
 ]
     /{group_id} - посмотреть информацию о группе с данным id с участниками
@@ -211,43 +236,56 @@ response
     {
         "id": 1,
         "name": "Basic Course 2024",
+        "goalSetTime": "2025-06-01T16:55:30.819065",
+        "dueDate": "2025-06-01",
         "groupGoal": 110,
+        "minAvgDifficulty": 1.0,
+        "easyMediumThreshold": 40.0,
+        "mediumHardThreshold": 80.0,
         "ownerName": "Dr. John Doe",
         "ownerId": 1,
         "members": [
             {
-                "id": 3,
-                "login": "student1",
-                "name": "Alice Johnson",
-                "cfHandler": "alice_cf",
-                "acmpId": "1001"
-            },
-            {
                 "id": 4,
                 "login": "student2",
-                "name": "Bob Smith",
+                "name": "Bob Bmith",
                 "cfHandler": "bob_cf",
-                "acmpId": "1002"
+                "acmpId": "1002",
+                "studentGoal": 10,
+                "studentCurrentScore": 4
             },
             {
                 "id": 5,
                 "login": "student3",
-                "name": "Charlie Brown",
-                "cfHandler": "charlie_cf",
-                "acmpId": "1003"
+                "name": "Alice Aohnson",
+                "cfHandler": "Dmitry_",
+                "acmpId": "1001",
+                "studentGoal": 10,
+                "studentCurrentScore": 33
+            },
+            {
+                "id": 3,
+                "login": "student1",
+                "name": "Alice Aohnson",
+                "cfHandler": "Dmitry_",
+                "acmpId": "1001",
+                "studentGoal": 10,
+                "studentCurrentScore": 19
             }
         ]
     }
 
     http://localhost:8080/api/v1/groups/{group_id}/result
-    {
-        "groupId": 5,
-        "groupGoal": 2,
-        "currentGroupScore": 6,
-        "failingStudents": [], //если succsess==false то тут будут студенты,которые не выполнили
-                                    student goal
-        "success": true
-    }
+{
+    "groupId": 1,
+    "minDifficulty": 1.0,
+    "groupGoal": 110,
+    "currentGroupScore": 56,
+    "failingStudents": [
+        "Bob Bmith"
+    ],
+    "success": false
+}
 
 
 

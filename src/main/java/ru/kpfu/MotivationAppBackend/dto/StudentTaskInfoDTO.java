@@ -22,6 +22,8 @@ public class StudentTaskInfoDTO {
     @NotBlank
     private Platform platform;
     @NotBlank
+    private String number;
+    @NotBlank
     private String title;
     private double difficulty;
     @NotBlank
@@ -30,8 +32,9 @@ public class StudentTaskInfoDTO {
     private Verdict verdict;
     private LocalDateTime lastChangedTime;
 
-    public StudentTaskInfoDTO(Platform platform, String title,double difficulty, String link, Verdict verdict,LocalDateTime lastChangedTime) {
+    public StudentTaskInfoDTO(Platform platform,String number, String title,double difficulty, String link, Verdict verdict,LocalDateTime lastChangedTime) {
         this.platform = platform;
+        this.number = number;
         this.title = title;
         this.difficulty = difficulty;
         this.link = link;

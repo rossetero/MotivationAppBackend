@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS students (
 create table IF NOT EXISTS tasks (
 	id bigserial primary key not null,
 	platform varchar(20) not null,
+	number varchar(20) not null,
 	title varchar(200) not null,
 	difficulty real CHECK (difficulty >= 1 AND difficulty <= 100),
 	link varchar(100) not null
@@ -53,6 +54,8 @@ create table IF NOT EXISTS groups(
 	min_avg_difficulty real CHECK (min_avg_difficulty >= 1 AND min_avg_difficulty <= 100),
 	goal_set_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	due_date DATE DEFAULT CURRENT_DATE,
+	easy_medium_threshold real CHECK (easy_medium_threshold >= 1 AND easy_medium_threshold <= 100),
+	medium_hard_threshold real CHECK (medium_hard_threshold >= 1 AND medium_hard_threshold <= 100),
 	owner_id bigint not null,
 	foreign key(owner_id) references teachers(id)
 );
@@ -90,10 +93,10 @@ INSERT INTO teachers (id) VALUES
 (1),
 (2);
 
-INSERT INTO tasks (platform, title,difficulty, link) VALUES
-('CODEFORCES', 'Two Sum Problem',45, 'codeforces.com/problemset/problem/1/A'),
-('ACMP', 'Binary Search Implementation',23, 'acmp.ru/?main=task&id=2'),
-('LEETCODE', 'Longest Substring Without Repeating Characters',100, 'leetcode.com/problems/longest-substring-without-repeating-characters/');
+INSERT INTO tasks (platform,number, title,difficulty, link) VALUES
+('CODEFORCES','1A', 'Two Sum Problem',45, 'codeforces.com/problemset/problem/1/A'),
+('ACMP','2B', 'Binary Search Implementation',23, 'acmp.ru/?main=task&id=2'),
+('LEETCODE','1234', 'Longest Substring Without Repeating Characters',100, 'leetcode.com/problems/longest-substring-without-repeating-characters/');
 
 INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (3, 1, 'SUCCESS'),
@@ -103,11 +106,11 @@ INSERT INTO student_task (student_id, task_id, verdict) VALUES
 (5, 2, 'FAIL'),
 (5, 3, 'SUCCESS');
 
-INSERT INTO groups (owner_id,name,group_goal,min_avg_difficulty) VALUES
-(1,'Basic Course 2024', 110,1),
-(1,'Basic Course 2025', 100,1),
-(2,'Advanced Course 2025', 150,50),
-(2,'СМЕШАРИКИ', 300,70);
+INSERT INTO groups (owner_id,name,group_goal,min_avg_difficulty,easy_medium_threshold,medium_hard_threshold) VALUES
+(1,'Basic Course 2024', 110,1,40,80),
+(1,'Basic Course 2025', 100,1,10,30),
+(2,'Advanced Course 2025', 150,50,25,75),
+(2,'СМЕШАРИКИ', 300,70,30,70);
 
 
 INSERT INTO student_group (student_id, group_id, student_goal,student_current_score) VALUES
@@ -125,14 +128,3 @@ SELECT * FROM tasks;
 SELECT * FROM groups;
 SELECT * FROM student_task;
 SELECT * FROM student_group;
-
-
-
-
-
-
-
-
-
-
-

@@ -13,5 +13,4 @@ public class ProblemDTO {
     private Integer rating;
     private List<String> tags;
 
-    // геттеры и сеттеры
 }
