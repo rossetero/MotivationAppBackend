@@ -96,8 +96,18 @@
                 "verdict": "SUCCESS"
             }
             // Пример эндпоинта http://localhost:8080/api/v1/users/5/student/tasks/addTask
-            /deleteTask DELETE - удалить задачу
 
+            /deleteTask DELETE - удалить задачу
+            request JSON, такой эе как у addTask. Если найдет задачу то удалит ее,иначе выдаст ошибку.
+            внутри этот метод также уменьшает studentCurrentScore
+                        {
+                            "platform": "ACMP",
+                            "number": "0002",
+                            "title": "toDel",
+                            "difficulty":40,
+                            "link": "https://to.del",
+                            "verdict": "SUCCESS"
+                        }
 
         /groups - посмотреть группы в которых состоит студент
         response JSON
@@ -278,6 +288,7 @@ response
     http://localhost:8080/api/v1/groups/{group_id}/result
 {
     "groupId": 1,
+    "dueDate": "2025-06-01",
     "minDifficulty": 1.0,
     "groupGoal": 110,
     "currentGroupScore": 56,

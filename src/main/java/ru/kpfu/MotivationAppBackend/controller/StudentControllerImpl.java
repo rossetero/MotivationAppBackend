@@ -44,6 +44,12 @@ public class StudentControllerImpl implements StudentController {
         return ResponseEntity.ok(diffAndScore);
     }
 
+    @Override
+    public ResponseEntity<String> deleteTask(@RequestBody @Valid AddTaskDTO addTaskDTO, @PathVariable Long userId) {
+        studentService.deleteTask(addTaskDTO,userId);
+        return ResponseEntity.ok("Task deleted");
+    }
+
     @GetMapping("/profile")
     @Override
     public StudentProfileDTO getStudentProfile(@PathVariable Long userId) {

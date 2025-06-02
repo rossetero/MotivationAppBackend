@@ -12,6 +12,7 @@ import ru.kpfu.MotivationAppBackend.enums.Verdict;
 import ru.kpfu.MotivationAppBackend.repository.StudentGroupRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentTaskRepository;
+import ru.kpfu.MotivationAppBackend.repository.TaskRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,14 +25,16 @@ public class StudentServiceImpl implements StudentService {
     private final StudentTaskRepository studentTaskRepository;
     private final StudentGroupRepository studentGroupRepository;
     private final TaskService taskService;
+    private final TaskRepository taskRepository;
     private final CodeForcesServiceImpl codeForcesService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService, CodeForcesServiceImpl codeForcesService) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService, TaskRepository taskRepository, CodeForcesServiceImpl codeForcesService) {
         this.studentRepository = studentRepository;
         this.studentTaskRepository = studentTaskRepository;
         this.studentGroupRepository = studentGroupRepository;
         this.taskService = taskService;
+        this.taskRepository = taskRepository;
         this.codeForcesService = codeForcesService;
     }
 
@@ -45,13 +48,13 @@ public class StudentServiceImpl implements StudentService {
         return studentTaskRepository.findStudentTaskInfoByStudentIdAndPlatform(studentId, platform);
     }
 
-    private int getTaskScore(double normalizedDiff, Group g){
+    private int getTaskScore(double normalizedDiff, Group g) {
         double easyMediumThreshold = g.getEasyMediumThreshold();
         double mediumThreshold = g.getMediumHardThreshold();
-        if (normalizedDiff<=easyMediumThreshold){
+        if (normalizedDiff <= easyMediumThreshold) {
             System.out.println("=====EASY======");
             return 1;
-        } else if (normalizedDiff<mediumThreshold) {
+        } else if (normalizedDiff < mediumThreshold) {
             System.out.println("====MEDIUM=====");
             return 2;
         } else {
@@ -61,24 +64,41 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
-    private Pair<Double,Integer> incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
+    private Pair<Double, Integer> incrementCurrentScore(AddTaskDTO addTaskDTO, Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         StudentGroup sg = student.getParticipatedGroups().getFirst();
         Group g = sg.getGroup();
-        double normalizedDiff = taskService.normalizeDiff(addTaskDTO.getDifficulty(),addTaskDTO.getPlatform());
+        double normalizedDiff = taskService.normalizeDiff(addTaskDTO.getDifficulty(), addTaskDTO.getPlatform());
         int taskScore = 0;
         if (normalizedDiff >= g.getMinAvgDifficulty() && addTaskDTO.getVerdict() == Verdict.SUCCESS) {
-            taskScore = getTaskScore(normalizedDiff,g);
+            taskScore = getTaskScore(normalizedDiff, g);
             int score = sg.getStudentCurrentScore() + taskScore;
             sg.setStudentCurrentScore(score);
             studentGroupRepository.save(sg);
         }
-        return Pair.of(normalizedDiff,taskScore);
+        return Pair.of(normalizedDiff, taskScore);
     }
 
     @Override
-    public Pair<Double,Integer> addTask(AddTaskDTO addTaskDTO, Long studentId) {
+    public void deleteTask(AddTaskDTO addTaskDTO, Long studentId) {
+        addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
+        StudentTaskInfoDTO relation = studentTaskRepository.
+                findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),
+                        addTaskDTO.getTitle(), addTaskDTO.getLink()).orElseThrow(() -> new EntityNotFoundException("Task for student to delete not found"));
+        StudentTask studentTask = studentTaskRepository.findById(relation.getId()).orElseThrow(RuntimeException::new);
+        Task taskToDelete = studentTask.getTask();
+        int currentStudentScore = studentTask.getStudent().getParticipatedGroups().getFirst().getStudentCurrentScore();
+        StudentGroup sg = studentTask.getStudent().getParticipatedGroups().getFirst();
+        int newCurrentStudentScore = currentStudentScore - getTaskScore(taskToDelete.getDifficulty(),sg.getGroup());
+        sg.setStudentCurrentScore(newCurrentStudentScore);
+        studentGroupRepository.save(sg);
+        studentTaskRepository.delete(studentTask);
+        taskRepository.delete(taskToDelete);
+    }
+
+    @Override
+    public Pair<Double, Integer> addTask(AddTaskDTO addTaskDTO, Long studentId) {
         addTaskDTO.setLink(removePrefix(addTaskDTO.getLink()));
         Optional<StudentTaskInfoDTO> relation = studentTaskRepository.
                 findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),
@@ -100,7 +120,7 @@ public class StudentServiceImpl implements StudentService {
         } else {
             System.out.println("No new content");
         }
-        return incrementCurrentScore(addTaskDTO,studentId);
+        return incrementCurrentScore(addTaskDTO, studentId);
     }
 
     @Override
@@ -143,7 +163,7 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         if (student.getCfHandler() == null)
             throw new RuntimeException("CF HANDLER IS NULL");
-        int currentAmountOfTasks = getStudentTaskListByPlatform(studentId,Platform.CODEFORCES).size();
+        int currentAmountOfTasks = getStudentTaskListByPlatform(studentId, Platform.CODEFORCES).size();
         System.out.println("========== AMOUNTTask==========");
         System.out.println(currentAmountOfTasks);
         System.out.println("========== AMOUNTTask==========");
@@ -152,13 +172,13 @@ public class StudentServiceImpl implements StudentService {
         System.out.println("========== TasksFROM CF==========");
         System.out.println(tasksFromCF);
         System.out.println("========== TasksFROM CF==========");
-        List<AddTaskDTO> newTasksFromCF = tasksFromCF.subList(currentAmountOfTasks,tasksFromCF.size());
+        List<AddTaskDTO> newTasksFromCF = tasksFromCF.subList(currentAmountOfTasks, tasksFromCF.size());
         System.out.println("==========NEEEW TasksFROM CF==========");
         System.out.println(newTasksFromCF);
         System.out.println("==========NEEEW TasksFROM CF==========");
         List<Pair<Double, Integer>> diffAndScoreList = new ArrayList<>();
-        for( AddTaskDTO taskDTO : newTasksFromCF){
-            diffAndScoreList.add(addTask(taskDTO,studentId));
+        for (AddTaskDTO taskDTO : newTasksFromCF) {
+            diffAndScoreList.add(addTask(taskDTO, studentId));
         }
         return diffAndScoreList;
     }
