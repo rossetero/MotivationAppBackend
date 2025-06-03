@@ -27,15 +27,17 @@ public class StudentServiceImpl implements StudentService {
     private final TaskService taskService;
     private final TaskRepository taskRepository;
     private final CodeForcesServiceImpl codeForcesService;
+    private final AcmpServiceImpl acmpService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService, TaskRepository taskRepository, CodeForcesServiceImpl codeForcesService) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentTaskRepository studentTaskRepository, StudentGroupRepository studentGroupRepository, TaskService taskService, TaskRepository taskRepository, CodeForcesServiceImpl codeForcesService, AcmpServiceImpl acmpService) {
         this.studentRepository = studentRepository;
         this.studentTaskRepository = studentTaskRepository;
         this.studentGroupRepository = studentGroupRepository;
         this.taskService = taskService;
         this.taskRepository = taskRepository;
         this.codeForcesService = codeForcesService;
+        this.acmpService = acmpService;
     }
 
     @Override
@@ -95,6 +97,11 @@ public class StudentServiceImpl implements StudentService {
         studentGroupRepository.save(sg);
         studentTaskRepository.delete(studentTask);
         taskRepository.delete(taskToDelete);
+    }
+
+    @Override
+    public void syncWithAcmp(Long userId) {
+        acmpService.syncWithAcmp("316103");
     }
 
     @Override

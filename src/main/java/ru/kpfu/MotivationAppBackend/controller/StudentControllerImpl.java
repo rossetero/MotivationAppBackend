@@ -74,5 +74,10 @@ public class StudentControllerImpl implements StudentController {
         return ResponseEntity.ok(diffAndScoreList);
     }
 
+    @Override
+    public void syncWithAcmp(Long userId) {
+        studentService.syncWithAcmp(userId);
+    }
+
 
 }
