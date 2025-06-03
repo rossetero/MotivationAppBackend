@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
+import ru.kpfu.MotivationAppBackend.dto.GroupDTOEnchanced;
 import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
 import ru.kpfu.MotivationAppBackend.service.TeacherService;
 
@@ -37,7 +38,7 @@ public class TeacherControllerImpl implements TeacherController {
 
     @GetMapping("/groups")
     @Override
-    public List<GroupDTO> getTeachersGroups(@PathVariable Long userId) {
+    public List<GroupDTOEnchanced> getTeachersGroups(@PathVariable Long userId) {
         return teacherService.getTeachersGroups(userId);
     }
 

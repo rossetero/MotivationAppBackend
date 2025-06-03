@@ -2,10 +2,7 @@ package ru.kpfu.MotivationAppBackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
-import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
-import ru.kpfu.MotivationAppBackend.dto.StudentTaskInfoDTO;
-import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
+import ru.kpfu.MotivationAppBackend.dto.*;
 import ru.kpfu.MotivationAppBackend.entity.*;
 import ru.kpfu.MotivationAppBackend.repository.GroupRepository;
 import ru.kpfu.MotivationAppBackend.repository.StudentGroupRepository;
@@ -14,8 +11,6 @@ import ru.kpfu.MotivationAppBackend.repository.TeacherRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,13 +20,15 @@ public class TeacherServiceImpl implements TeacherService {
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
     private final StudentGroupRepository studentGroupRepository;
+    private final GroupService groupService;
 
     @Autowired
-    public TeacherServiceImpl(TeacherRepository teacherRepository, GroupRepository groupRepository, StudentRepository studentRepository, StudentGroupRepository studentGroupRepository) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, GroupRepository groupRepository, StudentRepository studentRepository, StudentGroupRepository studentGroupRepository, GroupService groupService) {
         this.teacherRepository = teacherRepository;
         this.groupRepository = groupRepository;
         this.studentRepository = studentRepository;
         this.studentGroupRepository = studentGroupRepository;
+        this.groupService = groupService;
     }
 
     @Override
@@ -50,8 +47,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<GroupDTO> getTeachersGroups(Long teacherId) {
-        return groupRepository.findAllGroupDTOsForOwner(teacherId);
+    public List<GroupDTOEnchanced> getTeachersGroups(Long teacherId) {
+        return groupRepository.findAllGroupDTOsForOwner(teacherId).stream()
+                .map(g -> new GroupDTOEnchanced(g,groupService.getGroupResult(g.getId()).getCurrentGroupScore()))
+                .toList();
+
     }
 
     @Override

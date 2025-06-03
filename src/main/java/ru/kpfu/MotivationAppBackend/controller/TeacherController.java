@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
+import ru.kpfu.MotivationAppBackend.dto.GroupDTOEnchanced;
 import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public interface TeacherController {
     ResponseEntity<String> editTeacherProfile(TeacherProfileDTO teacherProfileDTO, Long userId);
 
     @GetMapping("/groups")
-    List<GroupDTO> getTeachersGroups(Long userId);
+    List<GroupDTOEnchanced> getTeachersGroups(Long userId);
 
     @GetMapping("/groups/{groupId}")
     GroupDTO getTeachersGroupInfo(Long userId, Long groupId);

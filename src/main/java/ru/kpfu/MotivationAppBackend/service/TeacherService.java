@@ -1,6 +1,7 @@
 package ru.kpfu.MotivationAppBackend.service;
 
 import ru.kpfu.MotivationAppBackend.dto.GroupDTO;
+import ru.kpfu.MotivationAppBackend.dto.GroupDTOEnchanced;
 import ru.kpfu.MotivationAppBackend.dto.TeacherProfileDTO;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ public interface TeacherService {
 
     void editTeacherProfile(TeacherProfileDTO teacherProfileDTO, Long teacherId);
 
-    List<GroupDTO> getTeachersGroups(Long teacherId);
+    List<GroupDTOEnchanced> getTeachersGroups(Long teacherId);
 
     GroupDTO getTeachersGroupInfo(Long teacherId,Long groupId);
 
