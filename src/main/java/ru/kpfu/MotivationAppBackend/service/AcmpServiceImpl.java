@@ -32,11 +32,9 @@ public class AcmpServiceImpl {
         Pattern pattern = Pattern.compile(taskAmountRegex);
         Matcher matcher = pattern.matcher(raw);
         matcher.find();
-        Integer successfulTasksAmount = Integer.valueOf(matcher.group(1));
+        int successfulTasksAmount = Integer.parseInt(matcher.group(1));
         matcher.find();
-        Integer failedTasksAmount = Integer.valueOf(matcher.group(1));
-//        System.out.println(successfulTasksAmount);
-//        System.out.println(failedTasksAmount);
+        int failedTasksAmount = Integer.parseInt(matcher.group(1));
         String taskLinkRegex = "\\?main=task&id_task=\\d+";
         pattern = Pattern.compile(taskLinkRegex);
         matcher = pattern.matcher(raw);
