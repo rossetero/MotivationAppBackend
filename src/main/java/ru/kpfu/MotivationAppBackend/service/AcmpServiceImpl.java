@@ -44,7 +44,6 @@ public class AcmpServiceImpl {
         for (int i = 0; i < successfulTasksAmount && matcher.find(); i++) {
             successfulTasksLinks.add("acmp.ru/" + matcher.group(0));
         }
-//        System.out.println(successfulTasksLinks);
         List<String> failedTasksLinks = new ArrayList<>(failedTasksAmount);
         for (int i = 0; i < failedTasksAmount && matcher.find(); i++) {
             failedTasksLinks.add("acmp.ru/" + matcher.group(0));
