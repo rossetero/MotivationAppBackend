@@ -53,7 +53,10 @@ public class CodeForcesServiceImpl {
         mappedTask.setPlatform(Platform.CODEFORCES);
         mappedTask.setNumber(submissionDTO.getProblem().getContestId() + submissionDTO.getProblem().getIndex());
         mappedTask.setTitle(submissionDTO.getProblem().getName());
-        mappedTask.setDifficulty(submissionDTO.getProblem().getRating());
+        if(submissionDTO.getProblem().getRating()!=null)
+            mappedTask.setDifficulty(submissionDTO.getProblem().getRating());
+        else
+            mappedTask.setDifficulty(800);
         String link = "https://codeforces.com/problemset/problem/" +
                 +submissionDTO.getProblem().getContestId() + "/" + submissionDTO.getProblem().getIndex();
         mappedTask.setLink(link);

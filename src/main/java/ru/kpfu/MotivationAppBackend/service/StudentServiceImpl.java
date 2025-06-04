@@ -106,6 +106,7 @@ public class StudentServiceImpl implements StudentService {
         Optional<StudentTaskInfoDTO> relation = studentTaskRepository.
                 findByStudentTaskByPlatformAndTitleAndLink(studentId, addTaskDTO.getPlatform(),
                         addTaskDTO.getTitle(), addTaskDTO.getLink());
+        Pair<Double, Integer> taskDiffScore = null;
         if (relation.isEmpty()) {
             taskService.addTaskIfNotExists(addTaskDTO);
             Task task = taskService.findByTitleAndLink(addTaskDTO.getTitle(), addTaskDTO.getLink()).orElseThrow(RuntimeException::new);
@@ -115,15 +116,17 @@ public class StudentServiceImpl implements StudentService {
             studentTask.setVerdict(addTaskDTO.getVerdict());
             studentTask.setLastChangedTime(LocalDateTime.now());
             studentTaskRepository.save(studentTask);
+            taskDiffScore = incrementCurrentScore(addTaskDTO, studentId);
         } else if (relation.get().getVerdict() != addTaskDTO.getVerdict()) {
             StudentTask studentTask = studentTaskRepository.findById(relation.get().getId()).orElseThrow(RuntimeException::new);
             studentTask.setVerdict(addTaskDTO.getVerdict());
             studentTask.setLastChangedTime(LocalDateTime.now());
             studentTaskRepository.save(studentTask);
+            taskDiffScore = incrementCurrentScore(addTaskDTO, studentId);
         } else {
             System.out.println("No new content");
         }
-        return incrementCurrentScore(addTaskDTO, studentId);
+        return taskDiffScore;
     }
 
     @Override
@@ -166,22 +169,16 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         if (student.getCfHandler() == null)
             throw new RuntimeException("CF HANDLER IS NULL");
-        int currentAmountOfTasks = getStudentTaskListByPlatform(studentId, Platform.CODEFORCES).size();
-        System.out.println("========== AMOUNTTask==========");
-        System.out.println(currentAmountOfTasks);
-        System.out.println("========== AMOUNTTask==========");
         List<AddTaskDTO> tasksFromCF = codeForcesService.getTaskFromSubmissions(student.getCfHandler())
                 .reversed();
         System.out.println("========== TasksFROM CF==========");
         System.out.println(tasksFromCF);
         System.out.println("========== TasksFROM CF==========");
-        List<AddTaskDTO> newTasksFromCF = tasksFromCF.subList(currentAmountOfTasks, tasksFromCF.size());
-        System.out.println("==========NEEEW TasksFROM CF==========");
-        System.out.println(newTasksFromCF);
-        System.out.println("==========NEEEW TasksFROM CF==========");
         List<Pair<Double, Integer>> diffAndScoreList = new ArrayList<>();
-        for (AddTaskDTO taskDTO : newTasksFromCF) {
-            diffAndScoreList.add(addTask(taskDTO, studentId));
+        for (AddTaskDTO taskDTO : tasksFromCF) {
+            Pair<Double, Integer> taskDiffScore = addTask(taskDTO, studentId);
+            if(taskDiffScore!=null)
+                diffAndScoreList.add(taskDiffScore);
         }
         return diffAndScoreList;
     }
@@ -199,12 +196,14 @@ public class StudentServiceImpl implements StudentService {
         } catch (NumberFormatException e) {
             throw new RuntimeException("WRONG ACMP ID FORMAT");
         }
-        List<AddTaskDTO> taskFromAcmp = acmpService.getTaskFromAcmpInDTO(acmpId);
-        List<StudentTaskInfoDTO> existingAcmpTasks = getStudentTaskListByPlatform(studentId, Platform.ACMP);
-        for (AddTaskDTO incomingAcmpTask : taskFromAcmp) {
-            //if
+        List<AddTaskDTO> tasksFromAcmp = acmpService.getTaskFromAcmpInDTO(acmpId);
+        List<Pair<Double, Integer>> diffAndScoreList = new ArrayList<>();
+        for (AddTaskDTO taskDTO : tasksFromAcmp) {
+            Pair<Double, Integer> taskDiffScore = addTask(taskDTO, studentId);
+            if(taskDiffScore!=null)
+                diffAndScoreList.add(taskDiffScore);
         }
-        return null;
+        return diffAndScoreList;
     }
 
     private String removePrefix(String url) {

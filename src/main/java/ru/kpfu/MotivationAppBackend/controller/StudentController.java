@@ -37,5 +37,5 @@ public interface StudentController {
    ResponseEntity<List<Pair<Double,Integer>>> syncWithCodeforces(@PathVariable Long userId);
 
     @PutMapping("/tasks/syncAcmp")
-    void syncWithAcmp(@PathVariable Long userId);
+    List<Pair<Double, Integer>> syncWithAcmp(@PathVariable Long userId);
 }

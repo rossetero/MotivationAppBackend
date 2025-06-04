@@ -75,8 +75,8 @@ public class StudentControllerImpl implements StudentController {
     }
 
     @Override
-    public void syncWithAcmp(Long userId) {
-        studentService.syncWithAcmp(userId);
+    public List<Pair<Double, Integer>> syncWithAcmp(Long userId) {
+        return studentService.syncWithAcmp(userId);
     }
 
 
