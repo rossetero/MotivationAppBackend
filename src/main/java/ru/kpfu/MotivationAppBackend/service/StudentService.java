@@ -18,5 +18,5 @@ public interface StudentService {
     List<StudentGoalsDTO> getParticipatedGroups(Long studentId);
     List<Pair<Double,Integer>> syncWithCodeforces(Long studentId);
     void deleteTask(AddTaskDTO addTaskDTO, Long studentId);
-    void syncWithAcmp(Long userId);
+    List<Pair<Double, Integer>> syncWithAcmp(Long userId);
 }

@@ -92,17 +92,13 @@ public class StudentServiceImpl implements StudentService {
         Task taskToDelete = studentTask.getTask();
         int currentStudentScore = studentTask.getStudent().getParticipatedGroups().getFirst().getStudentCurrentScore();
         StudentGroup sg = studentTask.getStudent().getParticipatedGroups().getFirst();
-        int newCurrentStudentScore = currentStudentScore - getTaskScore(taskToDelete.getDifficulty(),sg.getGroup());
+        int newCurrentStudentScore = currentStudentScore - getTaskScore(taskToDelete.getDifficulty(), sg.getGroup());
         sg.setStudentCurrentScore(newCurrentStudentScore);
         studentGroupRepository.save(sg);
         studentTaskRepository.delete(studentTask);
         taskRepository.delete(taskToDelete);
     }
 
-    @Override
-    public void syncWithAcmp(Long userId) {
-        acmpService.syncWithAcmp("316103");
-    }
 
     @Override
     public Pair<Double, Integer> addTask(AddTaskDTO addTaskDTO, Long studentId) {
@@ -188,6 +184,27 @@ public class StudentServiceImpl implements StudentService {
             diffAndScoreList.add(addTask(taskDTO, studentId));
         }
         return diffAndScoreList;
+    }
+
+
+    @Override
+    public List<Pair<Double, Integer>> syncWithAcmp(Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        String acmpId = student.getAcmpId();
+        if (acmpId == null)
+            throw new RuntimeException("ACMP ID IS NULL");
+        try {
+            Integer.parseInt(acmpId);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("WRONG ACMP ID FORMAT");
+        }
+        List<AddTaskDTO> taskFromAcmp = acmpService.getTaskFromAcmpInDTO(acmpId);
+        List<StudentTaskInfoDTO> existingAcmpTasks = getStudentTaskListByPlatform(studentId, Platform.ACMP);
+        for (AddTaskDTO incomingAcmpTask : taskFromAcmp) {
+            //if
+        }
+        return null;
     }
 
     private String removePrefix(String url) {
