@@ -15,4 +15,6 @@ public class StudentGoalsDTO {
     private int groupGoal;
     private int studentGoal;
     private int studentCurrentScore;
+    private double easyMediumThreshold; //с какой сложности задача считается средней
+    private double mediumHardThreshold; //с какой сложности задача считается сложной
 }

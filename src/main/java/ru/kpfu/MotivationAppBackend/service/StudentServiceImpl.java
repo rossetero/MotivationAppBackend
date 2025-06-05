@@ -156,7 +156,9 @@ public class StudentServiceImpl implements StudentService {
                             g.getName(),
                             g.getGroupGoal(),
                             studentGroup.getStudentGoal(),
-                            studentGroup.getStudentCurrentScore()
+                            studentGroup.getStudentCurrentScore(),
+                            g.getEasyMediumThreshold(),
+                            g.getMediumHardThreshold()
                     );
                 }
         ).toList();
