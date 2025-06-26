@@ -21,3 +21,5 @@ public class Student extends User {
     @JoinColumn(name = "student_id")
     private List<StudentGroup> participatedGroups;
 }
+
+

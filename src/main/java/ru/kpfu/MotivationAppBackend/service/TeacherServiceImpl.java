@@ -74,7 +74,9 @@ public class TeacherServiceImpl implements TeacherService {
             g.setName(groupDTO.getName());
             g.setEasyMediumThreshold(groupDTO.getEasyMediumThreshold());
             g.setMediumHardThreshold(groupDTO.getMediumHardThreshold());
-            if(g.getGroupGoal()!=groupDTO.getGroupGoal() || g.getMinAvgDifficulty()!=groupDTO.getMinAvgDifficulty() || g.getDueDate()!=groupDTO.getDueDate()){
+            if(g.getGroupGoal()!=groupDTO.getGroupGoal() ||
+                    g.getMinAvgDifficulty()!=groupDTO.getMinAvgDifficulty() ||
+                    g.getDueDate()!=groupDTO.getDueDate()){
                 g.setGroupGoal(groupDTO.getGroupGoal());
                 g.setMinAvgDifficulty(groupDTO.getMinAvgDifficulty());
                 g.setGoalSetTime(LocalDateTime.now());

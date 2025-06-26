@@ -15,13 +15,9 @@ import java.util.Optional;
 @Service
 public class AuthServiceImpl implements AuthService{
     private final UserRepository userRepository;
-    //private final PasswordEncoder passwordEncoder;
     @Autowired
-    public AuthServiceImpl(UserRepository userRepository
-                           //,PasswordEncoder passwordEncoder
-    ){
+    public AuthServiceImpl(UserRepository userRepository){
         this.userRepository=userRepository;
-       // this.passwordEncoder=passwordEncoder;
     }
 
     @Override
@@ -42,19 +38,14 @@ public class AuthServiceImpl implements AuthService{
         if (userRepository.existsByLogin(request.getLogin())) {
             throw new IllegalArgumentException("This login already exists");
         }
-
         if (!request.getPassword().equals(request.getRepeatPassword())) {
             throw new IllegalArgumentException("Wrong password");
         }
-
         User user = UserFactory.createUser(request.getRole());
         user.setLogin(request.getLogin());
         user.setName(request.getName());
-        //user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPassword(request.getPassword());
         user.setRole(request.getRole());
         userRepository.save(user);
-
-
     }
 }

@@ -5,6 +5,4 @@ import lombok.Data;
 @Data
 public class MemberDTO {
     private String handle;
-
-    // геттеры и сеттеры
 }

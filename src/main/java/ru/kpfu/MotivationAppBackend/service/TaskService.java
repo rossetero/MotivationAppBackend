@@ -7,7 +7,7 @@ import ru.kpfu.MotivationAppBackend.enums.Platform;
 import java.util.Optional;
 
 public interface TaskService {
-    public double normalizeDiff(double inputDiff, Platform platform);
+    double normalizeDiff(double inputDiff, Platform platform);
     void addTaskIfNotExists(AddTaskDTO addTaskDTO);
     Optional<Task> findByTitleAndLink(String title, String link);
 }

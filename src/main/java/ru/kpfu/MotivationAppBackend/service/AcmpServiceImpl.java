@@ -2,12 +2,17 @@ package ru.kpfu.MotivationAppBackend.service;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.kpfu.MotivationAppBackend.dto.AddTaskDTO;
 import ru.kpfu.MotivationAppBackend.enums.Platform;
 import ru.kpfu.MotivationAppBackend.enums.Verdict;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -67,14 +72,6 @@ public class AcmpServiceImpl {
         return syncedAcmpTasks;
     }
 
-    private AcmpData getTaskDifficultiesData(AcmpData data) {
-        data.failedTasksDifficulty = data.failedTasksLinks.stream()
-                .map(this::extractDifficultyFromTaskPageHtml).toList();
-        data.successfulTasksDifficulty = data.successfulTasksLinks.stream()
-                .map(this::extractDifficultyFromTaskPageHtml).toList();
-        return data;
-    }
-
     private Integer extractDifficultyFromTaskPageHtml(String url) {
         String response = restTemplate.getForObject(url, String.class);
         if (response != null) {
@@ -85,15 +82,25 @@ public class AcmpServiceImpl {
                 return Integer.valueOf(matcher.group(1));
             }
         }
-
         throw new RuntimeException("ACMP API returned error or empty response");
     }
 
+    private AcmpData getTaskDifficultiesData(AcmpData data) {
+        data.failedTasksDifficulty = data.failedTasksLinks.stream()
+                .map(this::extractDifficultyFromTaskPageHtml).toList();
+        data.successfulTasksDifficulty = data.successfulTasksLinks.stream()
+                .map(this::extractDifficultyFromTaskPageHtml).toList();
+        return data;
+    }
+
+
+
+    //"\((\d+)\):<\/b>"g - количество задач в группе на старнце (решенные и нерешенные)
+    //c группой захвата на число количесвта
+    //\?main=task&id_task=\d+ - получить ссылки на задачи и добавить к ним acmp.ru
+    //\(\S+ \S+ \S+ \S+ \S+ (\d+)%\) - сложность на станице с задачей и захватом на величину сложности
+
     private AcmpData extractDataFromUserPageRawHtml(String raw) {
-        //"\((\d+)\):<\/b>"g - количество задач в группе на старнце (решенные и нерешенные)
-        //c группой захвата на число количесвта
-        //\?main=task&id_task=\d+ - получить ссылки на задачи и добавить к ним acmp.ru
-        //\(\S+ \S+ \S+ \S+ \S+ (\d+)%\) - сложность на станице с задачей и захватом на величину сложности
         String taskAmountRegex = "\\((\\d+)\\):<\\/b>";
         Pattern pattern = Pattern.compile(taskAmountRegex);
         Matcher matcher = pattern.matcher(raw);
@@ -117,15 +124,16 @@ public class AcmpServiceImpl {
         return new AcmpData(successfulTasksLinks, failedTasksLinks);
     }
 
-    private String getRawHtmlUserPage(String acmpId) {
+    public String getRawHtmlUserPage(String acmpId) {
         String url = "https://acmp.ru/?main=user&id=" + acmpId;
         String response = restTemplate.getForObject(url, String.class);
-
         if (response != null) {
-            return response;
+            return new String(response.getBytes(StandardCharsets.ISO_8859_1),
+                    Charset.forName("Windows-1251"));
         }
         throw new RuntimeException("ACMP returned error or empty response");
     }
+
 
 
     public List<AddTaskDTO> getTaskFromAcmpInDTO(String acmpId){

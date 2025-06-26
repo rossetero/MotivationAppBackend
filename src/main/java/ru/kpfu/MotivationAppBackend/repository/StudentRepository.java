@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    boolean existsByLogin(String login);
     Optional<Student> findByLogin(@NotBlank @Size(min = 3, max = 50) String login);
 }
 

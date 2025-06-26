@@ -21,5 +21,5 @@ public class StudentGroup {
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
     private int studentGoal;
-    private int studentCurrentScore = 0;
+    private int studentCurrentScore;
 }

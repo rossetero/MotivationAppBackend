@@ -17,8 +17,6 @@ public class SubmissionDTO {
     private Integer passedTestCount;
     private Integer timeConsumedMillis;
     private Long memoryConsumedBytes;
-
-    // геттеры и сеттеры
 }
 
 

@@ -27,13 +27,10 @@ public class CodeForcesServiceImpl {
     private List<SubmissionDTO> getStudentCfSubmissions(String handle) {
         String url = "https://codeforces.com/api/user.status?lang=ru&handle=" + handle;
         ResponseDTO response = restTemplate.getForObject(url, ResponseDTO.class);
-
         if (response != null && "OK".equalsIgnoreCase(response.getStatus())) {
             return response.getResult();
         }
-
         throw new RuntimeException("Codeforces API returned error or empty response");
-
     }
 
     public List<AddTaskDTO> getTaskFromSubmissions(String handle) {
@@ -42,9 +39,6 @@ public class CodeForcesServiceImpl {
                 .collect(Collectors.toMap(AddTaskDTO::getLink, t -> t, (e, r) -> e, LinkedHashMap::new))
                 .values().stream()
                 .toList();
-        System.out.println("========== getTaskFromSubmissions==========");
-        System.out.println(l);
-        System.out.println("========== getTaskFromSubmissions==========");
         return l;
     }
 

@@ -25,3 +25,4 @@ public class StudentTask {
     private Verdict verdict;
     private LocalDateTime lastChangedTime;
 }
+

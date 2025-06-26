@@ -14,24 +14,22 @@ import ru.kpfu.MotivationAppBackend.service.AuthService;
 @RequestMapping("/api/v1/auth")
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
-
     @Autowired
     public AuthControllerImpl(AuthService authService) {
         this.authService = authService;
     }
-
     @PostMapping("/register")
     @Override
     public ResponseEntity<String> register(@RequestBody @Valid RegistrationRequestDTO request) {
         authService.register(request);
         return ResponseEntity.ok("Пользователь зарегистрирован");
     }
-
     @PostMapping("/login")
     @Override
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {
         LoginResponseDTO loginResponseDTO = authService.login(request);
         return ResponseEntity.ok(loginResponseDTO);
     }
-
 }
+
+

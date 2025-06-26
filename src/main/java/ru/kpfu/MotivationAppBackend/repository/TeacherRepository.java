@@ -11,8 +11,4 @@ import java.util.Optional;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    boolean existsByLogin(String login);
-    Optional<Teacher> findByLogin(@NotBlank @Size(min = 3, max = 50) String login);
 }
-
-

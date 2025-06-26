@@ -24,13 +24,13 @@ public class TaskServiceImpl implements TaskService {
         if (platform == Platform.ACMP) {
             return inputDiff;
         } else {
-            Pair<Double, Double> appDiffRange = Pair.of(1.0, 100.0);
             Pair<Double, Double> platformDiffRange = switch (platform) {
                 case CODEFORCES -> Pair.of(800.0, 3500.0);
                 case LEETCODE -> Pair.of(1.0, 3.0);
                 default -> throw new IllegalStateException("Unexpected value: " + platform);
             };
-            return Math.ceil(1 + (inputDiff - platformDiffRange.getFirst()) * 99 / (platformDiffRange.getSecond() - platformDiffRange.getFirst()));
+            return Math.ceil(1 + (inputDiff - platformDiffRange.getFirst()) * 99 /
+                    (platformDiffRange.getSecond() - platformDiffRange.getFirst()));
         }
     }
 

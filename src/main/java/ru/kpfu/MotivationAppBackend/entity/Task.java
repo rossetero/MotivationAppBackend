@@ -27,7 +27,6 @@ public class Task {
     private double difficulty;
     @NotNull
     private String link;
-
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
     List<StudentTask> studentsTasks;
